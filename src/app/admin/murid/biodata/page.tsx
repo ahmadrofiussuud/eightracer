@@ -1,0 +1,89 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { Users, Search, Plus, Download, Filter, CheckCircle2 } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { mockActiveStudents } from "@/data/mockData";
+
+export default function BiodataMuridAdminPage() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filtered = mockActiveStudents.filter((s) =>
+    s.fullName.toLowerCase().includes(searchTerm.toLowerCase()) || s.nisn.includes(searchTerm)
+  );
+
+  return (
+    <div className="space-y-6 pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Biodata Murid (Input & Kelola)</h1>
+          <p className="text-xs text-slate-500">Pusat data induk peserta didik SMAN 8 Jakarta terintegrasi Dapodik.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
+            <Download className="w-3.5 h-3.5" />
+            <span>Ekspor</span>
+          </Button>
+          <Button size="sm" className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700 gap-1.5">
+            <Plus className="w-3.5 h-3.5" />
+            <span>Tambah Murid Baru</span>
+          </Button>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader className="pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <CardTitle className="text-base">Daftar Induk Siswa</CardTitle>
+            <div className="relative w-full sm:w-72">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Cari siswa atau NISN..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              />
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nama Siswa</TableHead>
+                  <TableHead>NISN</TableHead>
+                  <TableHead>Kelas</TableHead>
+                  <TableHead>Jalur PPDB</TableHead>
+                  <TableHead>Rata-rata Rapor</TableHead>
+                  <TableHead>Status Dapodik</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell className="font-bold text-xs sm:text-sm text-slate-900">{student.fullName}</TableCell>
+                    <TableCell className="text-xs text-slate-500 font-mono">{student.nisn}</TableCell>
+                    <TableCell><Badge variant="secondary" className="text-xs">{student.className}</Badge></TableCell>
+                    <TableCell className="text-xs text-slate-700">{student.ppdbTrack}</TableCell>
+                    <TableCell className="font-bold text-xs text-indigo-700">{student.averageReportScore.toFixed(1)}</TableCell>
+                    <TableCell>
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Aktif
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
