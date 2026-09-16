@@ -2,21 +2,60 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { GraduationCap, Search, Plus, Download, ChevronRight, Sparkles } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import { GraduationCap, Search, Plus, Download, ChevronRight, Edit2, Trash2 } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { mockAlumniList } from "@/data/mockData";
+import { AlumniStudent } from "@/types/student";
+import { AlumniModalForm } from "@/components/forms/AlumniModalForm";
+import { createAlumniInDb, updateAlumniInDb, deleteAlumniFromDb } from "@/app/actions/crud-actions";
 
 export default function ListAlumniAdminPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [alumniList, setAlumniList] = useState<AlumniStudent[]>(mockAlumniList);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingAlumni, setEditingAlumni] = useState<AlumniStudent | null>(null);
 
-  const filtered = mockAlumniList.filter((s) =>
+  const filtered = alumniList.filter((s) =>
     s.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.major.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleAddClick = () => {
+    setEditingAlumni(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEditClick = (alumni: AlumniStudent) => {
+    setEditingAlumni(alumni);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = async (id: string, name: string) => {
+    if (confirm(`Apakah Anda yakin ingin menghapus data alumni "${name}"?`)) {
+      await deleteAlumniFromDb(id);
+      setAlumniList((prev) => prev.filter((a) => a.id !== id));
+    }
+  };
+
+  const handleFormSubmit = async (data: Omit<AlumniStudent, "id">) => {
+    if (editingAlumni) {
+      await updateAlumniInDb(editingAlumni.id, data);
+      setAlumniList((prev) =>
+        prev.map((a) => (a.id === editingAlumni.id ? { ...a, ...data } : a))
+      );
+    } else {
+      const res = await createAlumniInDb(data);
+      const newAlumni: AlumniStudent = {
+        id: res.data?.id || "ALM-" + Date.now(),
+        ...data,
+      };
+      setAlumniList((prev) => [newAlumni, ...prev]);
+    }
+  };
 
   return (
     <div className="space-y-6 pb-12">
@@ -30,12 +69,10 @@ export default function ListAlumniAdminPage() {
             <Download className="w-3.5 h-3.5" />
             <span>Ekspor Data</span>
           </Button>
-          <Link href="/admin/tracer/kelola">
-            <Button size="sm" className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700 gap-1.5">
-              <Plus className="w-3.5 h-3.5" />
-              <span>Input Alumni Baru</span>
-            </Button>
-          </Link>
+          <Button onClick={handleAddClick} size="sm" className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 shadow-sm">
+            <Plus className="w-3.5 h-3.5" />
+            <span>Input Alumni Baru</span>
+          </Button>
         </div>
       </div>
 
@@ -50,7 +87,7 @@ export default function ListAlumniAdminPage() {
                 placeholder="Cari nama, kampus, prodi..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/20"
               />
             </div>
           </div>
@@ -74,7 +111,7 @@ export default function ListAlumniAdminPage() {
                   <TableRow key={student.id}>
                     <TableCell>
                       <span className="font-bold text-slate-900 text-xs sm:text-sm block">{student.fullName}</span>
-                      <span className="text-[10px] text-slate-400">NISN: {student.nisn}</span>
+                      <span className="text-[10px] text-slate-400 font-mono">NISN: {student.nisn}</span>
                     </TableCell>
                     <TableCell>
                       <span className="font-semibold text-xs text-slate-800 block">{student.university}</span>
@@ -87,14 +124,30 @@ export default function ListAlumniAdminPage() {
                         {student.scholarshipStatus}
                       </Badge>
                     </TableCell>
-                    <TableCell className="font-bold text-xs text-slate-900">{student.cumulativeGpa.toFixed(2)}</TableCell>
+                    <TableCell className="font-bold text-xs text-slate-900">{Number(student.cumulativeGpa).toFixed(2)}</TableCell>
                     <TableCell className="text-right">
-                      <Link href={`/admin/alumni-beasiswa/timeline`}>
-                        <Button variant="ghost" size="sm" className="h-7 text-xs text-indigo-600 font-semibold gap-1">
-                          <span>Timeline</span>
-                          <ChevronRight className="w-3 h-3" />
-                        </Button>
-                      </Link>
+                      <div className="flex items-center justify-end gap-1">
+                        <Link href="/admin/alumni-beasiswa/timeline">
+                          <Button variant="ghost" size="sm" className="h-7 text-xs text-indigo-600 font-semibold gap-1 px-2">
+                            <span>Timeline</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </Button>
+                        </Link>
+                        <button
+                          onClick={() => handleEditClick(student)}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
+                          title="Edit Alumni"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(student.id, student.fullName)}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          title="Hapus Alumni"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -103,6 +156,14 @@ export default function ListAlumniAdminPage() {
           </div>
         </CardContent>
       </Card>
+
+      <AlumniModalForm
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleFormSubmit}
+        initialData={editingAlumni}
+        title={editingAlumni ? "Edit Data Alumni" : "Tambah Alumni Baru"}
+      />
     </div>
   );
 }

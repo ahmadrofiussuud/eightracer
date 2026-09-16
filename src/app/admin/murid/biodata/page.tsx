@@ -1,20 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Users, Search, Plus, Download, Filter, CheckCircle2 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import { Users, Search, Plus, Download, Filter, CheckCircle2, Edit2, Trash2 } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { mockActiveStudents } from "@/data/mockData";
+import { StudentModalForm } from "@/components/forms/StudentModalForm";
+import { StudentRecord, fetchStudentsFromDb, createStudentInDb, updateStudentInDb, deleteStudentFromDb } from "@/app/actions/crud-actions";
 
 export default function BiodataMuridAdminPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [students, setStudents] = useState<StudentRecord[]>(mockActiveStudents as unknown as StudentRecord[]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingStudent, setEditingStudent] = useState<StudentRecord | null>(null);
 
-  const filtered = mockActiveStudents.filter((s) =>
+  useEffect(() => {
+    async function loadData() {
+      const dbStudents = await fetchStudentsFromDb();
+      if (dbStudents.length > 0) {
+        setStudents(dbStudents);
+      }
+    }
+    loadData();
+  }, []);
+
+  const filtered = students.filter((s) =>
     s.fullName.toLowerCase().includes(searchTerm.toLowerCase()) || s.nisn.includes(searchTerm)
   );
+
+  const handleAddClick = () => {
+    setEditingStudent(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEditClick = (student: StudentRecord) => {
+    setEditingStudent(student);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = async (id: string, name: string) => {
+    if (confirm(`Apakah Anda yakin ingin menghapus data murid "${name}"?`)) {
+      await deleteStudentFromDb(id);
+      setStudents((prev) => prev.filter((s) => s.id !== id));
+    }
+  };
+
+  const handleFormSubmit = async (data: Omit<StudentRecord, "id" | "status">) => {
+    if (editingStudent) {
+      // Update
+      await updateStudentInDb(editingStudent.id, data);
+      setStudents((prev) =>
+        prev.map((s) => (s.id === editingStudent.id ? { ...s, ...data } : s))
+      );
+    } else {
+      // Create
+      const res = await createStudentInDb(data);
+      const newStudent: StudentRecord = {
+        id: res.data?.id || "STD-" + Date.now(),
+        ...data,
+        status: "Aktif",
+      };
+      setStudents((prev) => [newStudent, ...prev]);
+    }
+  };
 
   return (
     <div className="space-y-6 pb-12">
@@ -26,9 +77,9 @@ export default function BiodataMuridAdminPage() {
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
             <Download className="w-3.5 h-3.5" />
-            <span>Ekspor</span>
+            <span>Ekspor Data</span>
           </Button>
-          <Button size="sm" className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700 gap-1.5">
+          <Button onClick={handleAddClick} size="sm" className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 shadow-sm">
             <Plus className="w-3.5 h-3.5" />
             <span>Tambah Murid Baru</span>
           </Button>
@@ -62,6 +113,7 @@ export default function BiodataMuridAdminPage() {
                   <TableHead>Jalur PPDB</TableHead>
                   <TableHead>Rata-rata Rapor</TableHead>
                   <TableHead>Status Dapodik</TableHead>
+                  <TableHead className="text-right">Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -71,11 +123,29 @@ export default function BiodataMuridAdminPage() {
                     <TableCell className="text-xs text-slate-500 font-mono">{student.nisn}</TableCell>
                     <TableCell><Badge variant="secondary" className="text-xs">{student.className}</Badge></TableCell>
                     <TableCell className="text-xs text-slate-700">{student.ppdbTrack}</TableCell>
-                    <TableCell className="font-bold text-xs text-indigo-700">{student.averageReportScore.toFixed(1)}</TableCell>
+                    <TableCell className="font-bold text-xs text-indigo-700">{Number(student.averageReportScore).toFixed(1)}</TableCell>
                     <TableCell>
                       <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Aktif
                       </span>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          onClick={() => handleEditClick(student)}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                          title="Edit Murid"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(student.id, student.fullName)}
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          title="Hapus Murid"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -84,6 +154,14 @@ export default function BiodataMuridAdminPage() {
           </div>
         </CardContent>
       </Card>
+
+      <StudentModalForm
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleFormSubmit}
+        initialData={editingStudent}
+        title={editingStudent ? "Edit Data Murid" : "Tambah Murid Baru"}
+      />
     </div>
   );
 }
