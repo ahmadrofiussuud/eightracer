@@ -86,12 +86,88 @@ ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.students ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.alumni ENABLE ROW LEVEL SECURITY;
 
--- Public read access policies
-CREATE POLICY "Allow public read access to students" ON public.students FOR SELECT USING (true);
-CREATE POLICY "Allow public read access to alumni" ON public.alumni FOR SELECT USING (true);
-CREATE POLICY "Allow public read access to user_roles" ON public.user_roles FOR SELECT USING (true);
+-- Hapus policy lama jika sudah pernah dijalankan sebelumnya (aman dijalankan berkali-kali)
+DROP POLICY IF EXISTS "Allow public read access to students" ON public.students;
+DROP POLICY IF EXISTS "Allow public read access to alumni" ON public.alumni;
+DROP POLICY IF EXISTS "Allow public read access to user_roles" ON public.user_roles;
+DROP POLICY IF EXISTS "Allow full access for authenticated users to students" ON public.students;
+DROP POLICY IF EXISTS "Allow full access for authenticated users to alumni" ON public.alumni;
+DROP POLICY IF EXISTS "Allow full access for authenticated users to user_roles" ON public.user_roles;
 
--- Authenticated full access policies
-CREATE POLICY "Allow full access for authenticated users to students" ON public.students FOR ALL USING (true);
-CREATE POLICY "Allow full access for authenticated users to alumni" ON public.alumni FOR ALL USING (true);
-CREATE POLICY "Allow full access for authenticated users to user_roles" ON public.user_roles FOR ALL USING (true);
+-- ── READ: Hanya user yang sudah login (authenticated) yang bisa baca ──────────
+CREATE POLICY "Authenticated users can read students"
+  ON public.students FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can read alumni"
+  ON public.alumni FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Authenticated users can read user_roles"
+  ON public.user_roles FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+-- ── WRITE: Hanya user dengan role 'admin' di tabel user_roles yang bisa mutasi ──
+CREATE POLICY "Only admins can insert students"
+  ON public.students FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can update students"
+  ON public.students FOR UPDATE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can delete students"
+  ON public.students FOR DELETE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can insert alumni"
+  ON public.alumni FOR INSERT
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can update alumni"
+  ON public.alumni FOR UPDATE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can delete alumni"
+  ON public.alumni FOR DELETE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
+CREATE POLICY "Only admins can manage user_roles"
+  ON public.user_roles FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.user_roles
+      WHERE user_id = auth.uid() AND role = 'admin'
+    )
+  );
+
