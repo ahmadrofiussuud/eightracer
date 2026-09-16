@@ -19,10 +19,14 @@ CREATE TABLE IF NOT EXISTS public.user_roles (
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL UNIQUE,
   role VARCHAR(50) NOT NULL CHECK (role IN ('admin', 'student')),
   full_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255),
   nip VARCHAR(50),
   nisn VARCHAR(20),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Ensure email column exists if table was previously created
+ALTER TABLE public.user_roles ADD COLUMN IF NOT EXISTS email VARCHAR(255);
 
 -- Index for fast role lookup
 CREATE INDEX IF NOT EXISTS idx_user_roles_user_id ON public.user_roles(user_id);
@@ -163,36 +167,43 @@ ALTER TABLE public.alumni_progress ENABLE ROW LEVEL SECURITY;
 
 -- --- RLS for user_roles ---
 -- Admins can read all roles; users can only read their own role
+DROP POLICY IF EXISTS "Admins have full access to user_roles" ON public.user_roles;
 CREATE POLICY "Admins have full access to user_roles"
   ON public.user_roles FOR ALL
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Users can view their own role" ON public.user_roles;
 CREATE POLICY "Users can view their own role"
   ON public.user_roles FOR SELECT
   USING (auth.uid() = user_id);
 
 -- --- RLS for admin_sessions ---
 -- Only admins can query/manage admin sessions
+DROP POLICY IF EXISTS "Admin sessions accessible only by admins" ON public.admin_sessions;
 CREATE POLICY "Admin sessions accessible only by admins"
   ON public.admin_sessions FOR ALL
   USING (public.is_admin() OR auth.uid() = user_id);
 
 -- --- RLS for admin_audit_logs ---
 -- Audit logs are append-only by admins, read-only by admins
+DROP POLICY IF EXISTS "Admin audit logs viewable by admins" ON public.admin_audit_logs;
 CREATE POLICY "Admin audit logs viewable by admins"
   ON public.admin_audit_logs FOR SELECT
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Admin audit logs insertable by admins" ON public.admin_audit_logs;
 CREATE POLICY "Admin audit logs insertable by admins"
   ON public.admin_audit_logs FOR INSERT
   WITH CHECK (public.is_admin());
 
 -- --- RLS for students ---
 -- Admin has full access; Students can only view their own record
+DROP POLICY IF EXISTS "Admins have full access to students" ON public.students;
 CREATE POLICY "Admins have full access to students"
   ON public.students FOR ALL
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Students can view their own profile" ON public.students;
 CREATE POLICY "Students can view their own profile"
   ON public.students FOR SELECT
   USING (
@@ -203,10 +214,12 @@ CREATE POLICY "Students can view their own profile"
   );
 
 -- --- RLS for assessments ---
+DROP POLICY IF EXISTS "Admins have full access to assessments" ON public.assessments;
 CREATE POLICY "Admins have full access to assessments"
   ON public.assessments FOR ALL
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Students can view their own assessment" ON public.assessments;
 CREATE POLICY "Students can view their own assessment"
   ON public.assessments FOR SELECT
   USING (
@@ -218,10 +231,12 @@ CREATE POLICY "Students can view their own assessment"
   );
 
 -- --- RLS for eligibility ---
+DROP POLICY IF EXISTS "Admins have full access to eligibility" ON public.eligibility;
 CREATE POLICY "Admins have full access to eligibility"
   ON public.eligibility FOR ALL
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Students can view their own eligibility status" ON public.eligibility;
 CREATE POLICY "Students can view their own eligibility status"
   ON public.eligibility FOR SELECT
   USING (
@@ -234,20 +249,24 @@ CREATE POLICY "Students can view their own eligibility status"
 
 -- --- RLS for alumni_admissions (Study Tracer) ---
 -- Admins can manage; authenticated users (students) can read tracer directory
+DROP POLICY IF EXISTS "Admins have full access to alumni_admissions" ON public.alumni_admissions;
 CREATE POLICY "Admins have full access to alumni_admissions"
   ON public.alumni_admissions FOR ALL
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Authenticated users can view alumni admissions" ON public.alumni_admissions;
 CREATE POLICY "Authenticated users can view alumni admissions"
   ON public.alumni_admissions FOR SELECT
   USING (auth.role() = 'authenticated');
 
 -- --- RLS for alumni_progress (Fitur Unggulan) ---
 -- Admins can manage; authenticated users can read progress & charts
+DROP POLICY IF EXISTS "Admins have full access to alumni_progress" ON public.alumni_progress;
 CREATE POLICY "Admins have full access to alumni_progress"
   ON public.alumni_progress FOR ALL
   USING (public.is_admin());
 
+DROP POLICY IF EXISTS "Authenticated users can view alumni progress" ON public.alumni_progress;
 CREATE POLICY "Authenticated users can view alumni progress"
   ON public.alumni_progress FOR SELECT
   USING (auth.role() = 'authenticated');
@@ -257,23 +276,31 @@ CREATE POLICY "Authenticated users can view alumni progress"
 -- ==============================================================================
 
 -- Create secure storage bucket for student documents (if not exists)
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES (
-  'student-documents',
-  'student-documents',
-  false,
-  5242880, -- Exactly 5 MB (5 * 1024 * 1024 bytes)
-  ARRAY['image/jpeg', 'image/png', 'application/pdf']
-)
-ON CONFLICT (id) DO UPDATE SET
-  file_size_limit = 5242880,
-  allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'application/pdf'];
+DO $$
+BEGIN
+  INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+  VALUES (
+    'student-documents',
+    'student-documents',
+    false,
+    5242880, -- Exactly 5 MB (5 * 1024 * 1024 bytes)
+    ARRAY['image/jpeg', 'image/png', 'application/pdf']
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    file_size_limit = 5242880,
+    allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'application/pdf'];
+EXCEPTION WHEN OTHERS THEN
+  -- Catch in case storage extension is configured differently
+  NULL;
+END $$;
 
 -- Storage RLS: Only Admins can upload/delete documents; students can read own files
+DROP POLICY IF EXISTS "Admins full access to student-documents" ON storage.objects;
 CREATE POLICY "Admins full access to student-documents"
   ON storage.objects FOR ALL
   USING (bucket_id = 'student-documents' AND public.is_admin());
 
+DROP POLICY IF EXISTS "Students can view their own documents" ON storage.objects;
 CREATE POLICY "Students can view their own documents"
   ON storage.objects FOR SELECT
   USING (
