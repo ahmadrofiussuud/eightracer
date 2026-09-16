@@ -1,275 +1,309 @@
 "use client";
+// v2 — fun redesign: bold shapes, tilted cards, fixed buttons
 
 import React from "react";
 import Link from "next/link";
 import {
   School,
-  Sparkles,
   ArrowRight,
   GraduationCap,
-  History,
   BarChart3,
-  Award,
   Users,
-  ShieldCheck,
   TrendingUp,
-  ChevronRight,
   CheckCircle2,
   BookOpen,
+  Award,
+  ShieldCheck,
+  LineChart,
+  ClipboardList,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
-      {/* Background glowing gradients */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-indigo-600/20 via-emerald-500/10 to-transparent blur-3xl pointer-events-none" />
-      <div className="absolute top-96 -left-48 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-96 -right-48 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Public Navbar */}
-      <header className="relative z-20 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-500 via-indigo-600 to-emerald-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
-              <School className="w-6 h-6" />
+    <div className="min-h-screen bg-white text-slate-800 flex flex-col overflow-x-hidden">
+      {/* Navbar */}
+      <header className="sticky top-0 z-30 bg-white border-b border-slate-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white group-hover:bg-indigo-700 transition-colors">
+              <School className="w-5 h-5" />
             </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="font-black text-2xl tracking-tight text-white">
-                  Eight<span className="text-indigo-400">racer</span>
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                  SMAN 8
-                </span>
-              </div>
-              <span className="text-[11px] text-slate-400">
-                Sistem Pelacakan Siswa & Alumni PTN
+            <div className="flex flex-col leading-tight">
+              <span className="font-black text-lg tracking-tight text-slate-900">
+                Eight<span className="text-indigo-600">racer</span>
               </span>
+              <span className="text-[10px] text-slate-400 font-medium">SMAN 8 Jakarta</span>
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-            <a href="#fitur" className="hover:text-white transition-colors">Fitur Unggulan</a>
-            <a href="#timeline" className="hover:text-white transition-colors">Linimasa</a>
-            <a href="#analitik" className="hover:text-white transition-colors">Analitik Beasiswa</a>
-            <a href="#tentang" className="hover:text-white transition-colors">Tentang Sistem</a>
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-500">
+            <a href="#fitur" className="hover:text-slate-900 transition-colors">Fitur</a>
+            <a href="#statistik" className="hover:text-slate-900 transition-colors">Statistik</a>
+            <a href="#tentang" className="hover:text-slate-900 transition-colors">Tentang</a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <Link href="/login">
-              <Button variant="outline" className="border-slate-700 bg-slate-800/80 text-white hover:bg-slate-700 hover:text-white text-xs sm:text-sm">
-                Masuk (Login)
+              <Button variant="outline" className="text-sm border-slate-200 text-slate-700 hover:bg-slate-50 h-9 px-4">
+                Masuk
               </Button>
             </Link>
             <Link href="/admin/alumni-beasiswa/analitik">
-              <Button className="bg-gradient-to-r from-indigo-500 to-emerald-500 hover:from-indigo-600 hover:to-emerald-600 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-indigo-500/20 gap-1.5">
-                <span>Eksplor Portal</span>
-                <ArrowRight className="w-4 h-4" />
+              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm h-9 px-4 gap-1.5">
+                Eksplor Demo <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative z-10 pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-semibold text-indigo-300 mb-8 backdrop-blur-md shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Platform Pemantauan Siswa SMA ke Perguruan Tinggi Terintegrasi</span>
-        </div>
+      {/* ── HERO ── */}
+      <section className="relative bg-white pt-16 pb-0 overflow-hidden">
+        {/* Decorative shapes — bigger & bolder */}
+        <div className="absolute top-6 left-4 w-16 h-16 rounded-full bg-yellow-400 shadow-lg pointer-events-none animate-bounce" style={{animationDuration:'3s'}} />
+        <div className="absolute top-2 right-8 w-12 h-28 rounded-2xl bg-indigo-600 rotate-12 pointer-events-none" />
+        <div className="absolute top-32 right-2 w-8 h-8 rounded-full bg-yellow-300 pointer-events-none" />
+        <div className="absolute bottom-16 right-6 w-24 h-24 rounded-full border-[6px] border-indigo-300 pointer-events-none" />
+        <div className="absolute bottom-4 left-8 w-20 h-20 rounded-2xl bg-emerald-400 opacity-40 -rotate-12 pointer-events-none" />
+        <div className="absolute top-1/2 left-2 w-6 h-6 rounded-full bg-rose-400 opacity-60 pointer-events-none" />
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white max-w-5xl leading-[1.15]">
-          Dari Bangku SMA Hingga Prestasi di{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-teal-300 to-emerald-400">
-            Perguruan Tinggi Negeri
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-full px-3 py-1 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+            Platform Tracking Siswa & Alumni PTN
           </span>
-        </h1>
 
-        <p className="mt-6 text-base sm:text-xl text-slate-400 max-w-3xl leading-relaxed">
-          <strong>Eightracer</strong> mencatat perjalanan akademik siswa SMAN 8 Jakarta secara menyeluruh: seleksi masuk PTN (SNBP & SNBT), pemeringkatan eligibilitas 40%, pembiayaan UKT, hingga progres capaian beasiswa KIP-Kuliah dan IPK universitas.
-        </p>
+          <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight mb-5">
+            Pantau Perjalanan Siswa<br />
+            <span className="relative inline-block">
+              <span className="text-indigo-600">dari SMA ke PTN</span>
+              <span className="absolute -bottom-1 left-0 w-full h-3 bg-yellow-300 -z-10 rounded" />
+            </span>
+          </h1>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <Link href="/login" className="w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto h-12 px-8 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-xl shadow-indigo-500/30 gap-2">
-              <span>Masuk ke Dashboard</span>
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-          </Link>
+          <p className="text-slate-500 text-base md:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+            Eightracer membantu SMAN 8 Jakarta melacak data siswa dari bangku SMA
+            hingga progres perkuliahan alumni — lengkap dengan analitik beasiswa KIP-Kuliah.
+          </p>
 
-          <Link href="/admin/alumni-beasiswa/timeline" className="w-full sm:w-auto">
-            <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-6 border-slate-700 bg-slate-800/60 text-slate-200 hover:bg-slate-800 hover:text-white font-semibold text-base gap-2">
-              <History className="w-5 h-5 text-indigo-400" />
-              <span>Lihat Demo Linimasa Siswa</span>
-            </Button>
-          </Link>
-        </div>
-
-        {/* Real-time statistics ticker */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-full max-w-4xl text-left">
-          <div className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/80 backdrop-blur-xs">
-            <div className="text-3xl font-black text-white">1,248</div>
-            <div className="text-xs font-semibold text-slate-400 mt-1">Siswa Terdata Aktif</div>
-          </div>
-          <div className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/80 backdrop-blur-xs">
-            <div className="text-3xl font-black text-emerald-400">86.4%</div>
-            <div className="text-xs font-semibold text-slate-400 mt-1">Lulus Seleksi PTN</div>
-          </div>
-          <div className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/80 backdrop-blur-xs">
-            <div className="text-3xl font-black text-indigo-400">238</div>
-            <div className="text-xs font-semibold text-slate-400 mt-1">Penerima KIP-Kuliah</div>
-          </div>
-          <div className="p-5 rounded-2xl bg-slate-800/50 border border-slate-700/80 backdrop-blur-xs">
-            <div className="text-3xl font-black text-amber-400">3.63</div>
-            <div className="text-xs font-semibold text-slate-400 mt-1">Rata-rata IPK Alumni</div>
-          </div>
-        </div>
-      </section>
-
-      {/* Flagship Features Section */}
-      <section id="fitur" className="py-20 bg-slate-950/60 border-t border-slate-800/80 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <Badge variant="default" className="bg-indigo-600 text-white mb-3">
-              Fitur Unggulan (Flagship)
-            </Badge>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Dua Modul Inti Pemantauan Masa Depan Siswa
-            </h2>
-            <p className="mt-3 text-slate-400 text-sm sm:text-base">
-              Visualisasi modern yang memudahkan guru BK, kepala sekolah, dan orang tua memonitor keberlanjutan studi lulusan.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Feature 1: Analitik Beasiswa */}
-            <div id="analitik" className="rounded-3xl bg-gradient-to-b from-slate-800/80 to-slate-900 border border-slate-700/80 p-8 flex flex-col justify-between hover:border-indigo-500/50 transition-all shadow-xl">
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center mb-6">
-                  <BarChart3 className="w-7 h-7" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">
-                  Analitik Beasiswa & Evaluasi UKT
-                </h3>
-                <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                  Dashboard analitik interaktif menggunakan Recharts untuk memetakan penerima beasiswa KIP-Kuliah per tahun, korelasi nilai rapor SMA dengan IPK di perguruan tinggi, serta sebaran kelompok biaya kuliah (UKT) alumni.
-                </p>
-
-                <ul className="space-y-3 text-xs sm:text-sm text-slate-300">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Sebaran KIP-Kuliah vs Non-Beasiswa per angkatan</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Analisis korelasi nilai rapor terhadap kelulusan beasiswa</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Pengelompokan Uang Kuliah Tunggal (Golongan 1 - 8)</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-slate-700/60">
-                <Link href="/admin/alumni-beasiswa/analitik">
-                  <Button className="w-full bg-indigo-600 hover:bg-indigo-500 text-white gap-2 font-semibold">
-                    <span>Buka Dashboard Analitik Beasiswa</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Feature 2: Timeline Individu */}
-            <div id="timeline" className="rounded-3xl bg-gradient-to-b from-slate-800/80 to-slate-900 border border-slate-700/80 p-8 flex flex-col justify-between hover:border-emerald-500/50 transition-all shadow-xl">
-              <div>
-                <div className="w-14 h-14 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-6">
-                  <History className="w-7 h-7" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">
-                  Timeline Individu (Linimasa)
-                </h3>
-                <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                  Linimasa vertikal yang merangkum tonggak sejarah setiap siswa: sejak PPDB SMA, kejuaraan sains, pengumuman kelulusan SNBP, verifikasi KIP-K, Dean's List perkuliahan, hingga magang karir di dunia industri.
-                </p>
-
-                <ul className="space-y-3 text-xs sm:text-sm text-slate-300">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Rekam jejak kronologis terpadu dari kelas X sampai lulus PTN</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Pemantauan IPK per semester dan bantuan biaya hidup KIP-K</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Integrasi catatan komunikasi guru BK dan alumni</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-slate-700/60">
-                <Link href="/admin/alumni-beasiswa/timeline">
-                  <Button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white gap-2 font-semibold">
-                    <span>Lihat Linimasa Individu Alumni</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Role Access Guide */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative z-10">
-        <h2 className="text-3xl font-extrabold text-white mb-10">
-          Akses Sesuai Peran Pengguna
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {/* Admin Sekolah */}
-          <div className="p-8 rounded-2xl bg-slate-800/40 border border-slate-700 text-left">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold">
-                AD
-              </div>
-              <div>
-                <h4 className="font-bold text-lg text-white">Admin Sekolah & Guru BK</h4>
-                <p className="text-xs text-slate-400">Hak Akses Penuh Kelola Data & Analitik</p>
-              </div>
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed mb-6">
-              Kelola biodata murid, asesmen minat bakat, simulasi kuota eligibilitas SNBP, tracer study lulusan, dan visualisasi agregat beasiswa alumni.
-            </p>
+          <div className="flex flex-wrap gap-3 justify-center mb-12">
             <Link href="/login">
-              <Button variant="outline" className="w-full border-indigo-500/40 text-indigo-300 hover:bg-indigo-600 hover:text-white text-xs">
-                Login sebagai Admin Sekolah
+              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white h-12 px-8 text-sm font-bold gap-2 rounded-xl shadow">
+                Masuk ke Portal <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/admin/alumni-beasiswa/analitik">
+              <Button variant="outline" className="border-2 border-slate-200 text-slate-700 hover:bg-slate-50 h-12 px-8 text-sm font-bold gap-2 rounded-xl">
+                <BarChart3 className="w-4 h-4" /> Lihat Demo Dashboard
               </Button>
             </Link>
           </div>
 
-          {/* Siswa */}
-          <div className="p-8 rounded-2xl bg-slate-800/40 border border-slate-700 text-left">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
-                SW
+          {/* Dashboard mockup */}
+          <div className="relative mx-auto max-w-4xl">
+            {/* Floating badges */}
+            <div className="absolute -left-8 top-12 bg-yellow-400 text-slate-900 text-xs font-black px-3 py-1.5 rounded-full shadow-lg rotate-[-6deg] z-10 hidden md:block">📈 IPK Naik!</div>
+            <div className="absolute -right-6 top-8 bg-emerald-500 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg rotate-[5deg] z-10 hidden md:block">✅ KIP-K Verified</div>
+            <div className="absolute -right-4 bottom-12 bg-indigo-600 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg rotate-[-4deg] z-10 hidden md:block">🎓 248 Alumni</div>
+
+            <div className="rounded-2xl border-2 border-slate-200 shadow-2xl overflow-hidden bg-slate-100">
+              {/* Fake browser bar */}
+              <div className="bg-slate-800 px-4 py-2.5 flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-red-500" />
+                <span className="w-3 h-3 rounded-full bg-yellow-400" />
+                <span className="w-3 h-3 rounded-full bg-green-400" />
+                <span className="ml-3 text-xs text-slate-400 bg-slate-700 rounded px-3 py-0.5">eightracer.vercel.app/admin/analitik</span>
               </div>
-              <div>
-                <h4 className="font-bold text-lg text-white">Siswa & Calon Alumni</h4>
-                <p className="text-xs text-slate-400">Portal Mandiri Siswa SMAN 8</p>
+              {/* Mini dashboard preview */}
+              <div className="bg-white p-4">
+                <div className="flex gap-3">
+                  {/* Sidebar mini */}
+                  <div className="w-36 shrink-0 bg-slate-50 rounded-xl p-3 space-y-2">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <div className="w-5 h-5 rounded-lg bg-indigo-600" />
+                      <div className="h-3 bg-indigo-200 rounded w-16" />
+                    </div>
+                    {["w-full bg-indigo-100","w-3/4 bg-slate-200","w-4/5 bg-slate-200","w-2/3 bg-slate-200","w-full bg-indigo-500","w-3/4 bg-slate-200"].map((c,i)=>(
+                      <div key={i} className={`h-3.5 rounded-lg ${c}`} />
+                    ))}
+                  </div>
+                  {/* Content mini */}
+                  <div className="flex-1 space-y-3">
+                    <div className="grid grid-cols-4 gap-2">
+                      {[
+                        {bg:"bg-indigo-50",bar:"bg-indigo-400",val:"248"},
+                        {bg:"bg-emerald-50",bar:"bg-emerald-400",val:"89"},
+                        {bg:"bg-amber-50",bar:"bg-amber-400",val:"3.72"},
+                        {bg:"bg-violet-50",bar:"bg-violet-400",val:"88%"},
+                      ].map((c,i)=>(
+                        <div key={i} className={`rounded-xl p-2.5 ${c.bg}`}>
+                          <div className={`h-1.5 ${c.bar} rounded-full w-full mb-2 opacity-40`} />
+                          <div className={`text-sm font-black ${c.bar.replace('bg-','text-').replace('-400','-700')}`}>{c.val}</div>
+                          <div className="h-2 bg-slate-200 rounded w-3/4 mt-1" />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-slate-50 rounded-xl border border-slate-100 p-3 h-24 flex items-end gap-1 px-3">
+                        {[40,65,50,80,60,90,70,55].map((h,i)=>(
+                          <div key={i} className={`flex-1 rounded-t ${i===5?'bg-indigo-600':'bg-indigo-300'}`} style={{height:`${h}%`}} />
+                        ))}
+                      </div>
+                      <div className="bg-slate-50 rounded-xl border border-slate-100 p-3 h-24 flex items-center justify-center">
+                        <div className="relative w-14 h-14">
+                          <div className="absolute inset-0 rounded-full border-[10px] border-slate-200" />
+                          <div className="absolute inset-0 rounded-full border-[10px] border-transparent border-t-indigo-500 border-r-emerald-400 rotate-45" />
+                          <div className="absolute inset-2 rounded-full bg-white flex items-center justify-center">
+                            <span className="text-[9px] font-black text-slate-700">50%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed mb-6">
-              Cek status eligibilitas SNBP mandiri, lihat riwayat asesmen karir, pelajari sebaran alumni di berbagai PTN, dan pantau progres studi.
-            </p>
+            {/* Shadow glow */}
+            <div className="absolute -inset-4 bg-indigo-200/30 blur-3xl -z-10 rounded-3xl" />
+          </div>
+        </div>
+      </section>
+
+      {/* ── STAT STRIP ── */}
+      <section id="statistik" className="bg-indigo-600 py-10 mt-16">
+        <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+          {[
+            { value: "248+", label: "Alumni Terdaftar" },
+            { value: "89", label: "Penerima KIP-Kuliah" },
+            { value: "3.72", label: "Rata-rata IPK" },
+            { value: "34", label: "PTN Mitra" },
+          ].map((s) => (
+            <div key={s.label}>
+              <div className="text-3xl md:text-4xl font-black text-yellow-300">{s.value}</div>
+              <div className="text-indigo-200 text-sm mt-0.5 font-medium">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── FITUR ── */}
+      <section id="fitur" className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <p className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-2">Fitur Unggulan</p>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900">
+              Semua yang kamu butuhkan<br />
+              <span className="text-indigo-600">ada di sini</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: ClipboardList, iconColor: "text-white", iconBg: "bg-indigo-600", card: "bg-indigo-600 text-white", textMuted: "text-indigo-200", emoji: "📋", title: "Biodata & Profil Murid", desc: "Kelola data lengkap siswa mulai dari biodata, latar belakang ekonomi, hingga status bantuan sosial (PIP/PKH)." },
+              { icon: BookOpen, iconColor: "text-slate-900", iconBg: "bg-yellow-400", card: "bg-yellow-400 text-slate-900", textMuted: "text-yellow-800", emoji: "📚", title: "Asesmen Karakteristik", desc: "Rekam gaya belajar, tipe kepribadian DISC/MBTI, dan pemetaan RIASEC untuk bimbingan karir yang tepat." },
+              { icon: ShieldCheck, iconColor: "text-white", iconBg: "bg-emerald-600", card: "bg-emerald-500 text-white", textMuted: "text-emerald-100", emoji: "✅", title: "Penentuan Eligibilitas", desc: "Hitung dan cek status kelayakan KIP-Kuliah otomatis berdasarkan nilai rapor, kehadiran, dan prestasi." },
+              { icon: GraduationCap, iconColor: "text-white", iconBg: "bg-sky-500", card: "bg-sky-500 text-white", textMuted: "text-sky-100", emoji: "🎓", title: "Study Tracer Alumni", desc: "Lacak alumni yang masuk PTN — jalur masuk (SNBP/SNBT/Mandiri), universitas, dan program studi pilihan." },
+              { icon: LineChart, iconColor: "text-white", iconBg: "bg-violet-700", card: "bg-violet-600 text-white", textMuted: "text-violet-200", emoji: "📈", title: "Linimasa Individual", desc: "Visualisasi perjalanan kronologis tiap alumni dari kelulusan SMA hingga pencapaian di perguruan tinggi." },
+              { icon: BarChart3, iconColor: "text-white", iconBg: "bg-rose-600", card: "bg-slate-900 text-white", textMuted: "text-slate-400", emoji: "📊", title: "Analitik Beasiswa", desc: "Dashboard lengkap tren KIP-Kuliah per angkatan, distribusi IPK, dan sebaran UKT dengan grafik interaktif." },
+            ].map((f, i) => (
+              <div key={f.title} className={`rounded-3xl p-6 ${f.card} hover:scale-[1.03] hover:-rotate-1 transition-all duration-200 cursor-default relative overflow-hidden`}
+                style={{transform: i%2===1 ? 'rotate(1deg)' : i%3===2 ? 'rotate(-0.5deg)' : 'none'}}>
+                {/* bg decoration */}
+                <div className="absolute -bottom-4 -right-4 text-6xl opacity-10 pointer-events-none select-none">{f.emoji}</div>
+                <div className={`w-11 h-11 rounded-2xl ${f.iconBg} flex items-center justify-center mb-4 shadow-md`}>
+                  <f.icon className={`w-5 h-5 ${f.iconColor}`} />
+                </div>
+                <h3 className="font-black text-base mb-2">{f.title}</h3>
+                <p className={`text-sm leading-relaxed ${f.textMuted}`}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── AKSES ROLE ── */}
+      <section id="tentang" className="py-20 bg-slate-50 relative overflow-hidden">
+        {/* Decorative */}
+        <div className="absolute bottom-0 left-0 w-40 h-20 rounded-tr-full bg-emerald-400 opacity-20 pointer-events-none" />
+        <div className="absolute top-10 right-0 w-20 h-40 rounded-bl-full bg-yellow-400 opacity-20 pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-2">Akses Berbasis Peran</p>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900">Dirancang untuk semua pengguna</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Admin card */}
+            <div className="bg-indigo-600 rounded-3xl p-7 text-white relative overflow-hidden">
+              <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-indigo-500 opacity-50" />
+              <div className="absolute bottom-4 right-8 w-14 h-14 rounded-full bg-yellow-400 opacity-30" />
+              <div className="relative z-10">
+                <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center mb-4">
+                  <ShieldCheck className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-black mb-1">Admin Sekolah</h3>
+                <p className="text-indigo-200 text-sm mb-5">Akses penuh ke seluruh fitur manajemen</p>
+                <ul className="space-y-2.5 mb-6">
+                  {["Kelola seluruh data murid & alumni","Input eligibilitas & nilai pendukung","Akses penuh dashboard analitik","Buat & kelola akun admin lain","Export laporan & data beasiswa"].map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm">
+                      <CheckCircle2 className="w-4 h-4 text-yellow-300 shrink-0" /> {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/login" className="inline-flex items-center gap-1.5 text-sm font-bold text-yellow-300 hover:text-yellow-200 transition-colors">
+                  Masuk sebagai Admin <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Student card */}
+            <div className="bg-white rounded-3xl p-7 border-2 border-slate-100 relative overflow-hidden">
+              <div className="absolute -top-6 -right-6 w-28 h-28 rounded-full bg-emerald-100" />
+              <div className="absolute bottom-4 right-8 w-14 h-14 rounded-full bg-yellow-300 opacity-40" />
+              <div className="relative z-10">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-100 flex items-center justify-center mb-4">
+                  <GraduationCap className="w-6 h-6 text-emerald-600" />
+                </div>
+                <h3 className="text-xl font-black text-slate-900 mb-1">Siswa / Alumni</h3>
+                <p className="text-slate-400 text-sm mb-5">Pantau progres dan data diri sendiri</p>
+                <ul className="space-y-2.5 mb-6">
+                  {["Lihat profil & riwayat asesmen sendiri","Cek status eligibilitas KIP-Kuliah","Akses direktori alumni & tracer study","Lihat timeline perjalanan karir","Pantau progres IPK alumni lain"].map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" /> {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/login" className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-600 hover:text-emerald-700 transition-colors">
+                  Masuk sebagai Siswa <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="py-20 bg-slate-900 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-48 h-48 rounded-full bg-yellow-400 opacity-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full border-4 border-indigo-500 opacity-20 translate-x-1/3 translate-y-1/3 pointer-events-none" />
+        <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
+            Siap memulai?
+          </h2>
+          <p className="text-slate-400 mb-8">
+            Masuk ke portal Eightracer dan pantau perjalanan siswa SMAN 8 Jakarta hari ini.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
             <Link href="/login">
-              <Button variant="outline" className="w-full border-emerald-500/40 text-emerald-300 hover:bg-emerald-600 hover:text-white text-xs">
-                Login sebagai Siswa
+              <Button className="bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold h-12 px-8 rounded-xl text-sm shadow-lg">
+                Masuk ke Portal 🚀
+              </Button>
+            </Link>
+            <Link href="/admin/alumni-beasiswa/analitik">
+              <Button className="bg-white hover:bg-slate-100 text-slate-900 font-bold h-12 px-8 rounded-xl text-sm border-2 border-white/60 shadow">
+                Lihat Demo →
               </Button>
             </Link>
           </div>
@@ -277,14 +311,17 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-slate-800 py-8 bg-slate-950 px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 Eightracer - SMAN 8 Jakarta. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/login" className="hover:text-slate-300">Masuk Portal</Link>
-            <Link href="/admin/alumni-beasiswa/analitik" className="hover:text-slate-300">Analitik Beasiswa</Link>
-            <Link href="/admin/alumni-beasiswa/timeline" className="hover:text-slate-300">Linimasa Individu</Link>
+      <footer className="bg-white border-t border-slate-100 py-6">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-400">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center">
+              <School className="w-3.5 h-3.5 text-white" />
+            </div>
+            <span className="font-semibold text-slate-600">Eightracer</span>
+            <span>·</span>
+            <span>SMAN 8 Jakarta</span>
           </div>
+          <span>© 2025 Eightracer. Sistem Pelacakan Siswa & Alumni.</span>
         </div>
       </footer>
     </div>
