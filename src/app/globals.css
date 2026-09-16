@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cherry Freeland custom font */
+@font-face {
+  font-family: 'CherryFreeland';
+  src: url('/fonts/cherry-freeland.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-cherry {
+  font-family: 'CherryFreeland', cursive;
+}
+
+/* Cherry with stroke for visual weight */
+.font-cherry-bold {
+  font-family: 'CherryFreeland', cursive;
+  -webkit-text-stroke: 1.5px currentColor;
+  paint-order: stroke fill;
+}
+
 @layer base {
   :root {
     --background: 210 40% 98%;

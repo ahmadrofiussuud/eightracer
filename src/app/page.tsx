@@ -75,11 +75,16 @@ export default function LandingPage() {
             Platform Tracking Siswa & Alumni PTN
           </span>
 
-          <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight mb-5">
-            Pantau Perjalanan Siswa<br />
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-5">
+            Pantau{" "}
+            <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">Perjalanan</span>{" "}
+            Siswa<br />
+            dari{" "}
+            <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">SMA</span>{" "}
+            ke{" "}
             <span className="relative inline-block">
-              <span className="text-indigo-600">dari SMA ke PTN</span>
-              <span className="absolute -bottom-1 left-0 w-full h-3 bg-yellow-300 -z-10 rounded" />
+              <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">PTN</span>
+              <span className="absolute -bottom-1 left-0 w-full h-2.5 bg-yellow-300 -z-10 rounded-sm" />
             </span>
           </h1>
 
