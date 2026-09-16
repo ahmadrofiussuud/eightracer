@@ -10,6 +10,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { mockActiveStudents } from "@/data/mockData";
 import { StudentModalForm } from "@/components/forms/StudentModalForm";
 import { StudentRecord, fetchStudentsFromDb, createStudentInDb, updateStudentInDb, deleteStudentFromDb } from "@/app/actions/crud-actions";
+import { exportToCsv } from "@/lib/export";
 
 export default function BiodataMuridAdminPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -48,15 +49,24 @@ export default function BiodataMuridAdminPage() {
     }
   };
 
+  const handleExport = () => {
+    exportToCsv("Daftar_Induk_Siswa_SMAN8", students, [
+      { key: "fullName", header: "Nama Lengkap" },
+      { key: "nisn", header: "NISN" },
+      { key: "className", header: "Kelas" },
+      { key: "ppdbTrack", header: "Jalur PPDB" },
+      { key: "averageReportScore", header: "Rata-Rapor" },
+      { key: "economicStatus", header: "Status Ekonomi" },
+    ]);
+  };
+
   const handleFormSubmit = async (data: Omit<StudentRecord, "id" | "status">) => {
     if (editingStudent) {
-      // Update
       await updateStudentInDb(editingStudent.id, data);
       setStudents((prev) =>
         prev.map((s) => (s.id === editingStudent.id ? { ...s, ...data } : s))
       );
     } else {
-      // Create
       const res = await createStudentInDb(data);
       const newStudent: StudentRecord = {
         id: res.data?.id || "STD-" + Date.now(),
@@ -75,9 +85,9 @@ export default function BiodataMuridAdminPage() {
           <p className="text-xs text-slate-500">Pusat data induk peserta didik SMAN 8 Jakarta terintegrasi Dapodik.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
-            <Download className="w-3.5 h-3.5" />
-            <span>Ekspor Data</span>
+          <Button onClick={handleExport} variant="outline" size="sm" className="h-8 text-xs gap-1.5 hover:bg-slate-100">
+            <Download className="w-3.5 h-3.5 text-indigo-600" />
+            <span>Ekspor CSV</span>
           </Button>
           <Button onClick={handleAddClick} size="sm" className="h-8 text-xs bg-indigo-600 hover:bg-indigo-700 text-white gap-1.5 shadow-sm">
             <Plus className="w-3.5 h-3.5" />

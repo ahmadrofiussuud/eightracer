@@ -11,6 +11,7 @@ import { mockAlumniList } from "@/data/mockData";
 import { AlumniStudent } from "@/types/student";
 import { AlumniModalForm } from "@/components/forms/AlumniModalForm";
 import { createAlumniInDb, updateAlumniInDb, deleteAlumniFromDb } from "@/app/actions/crud-actions";
+import { exportToCsv } from "@/lib/export";
 
 export default function ListAlumniAdminPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,6 +42,20 @@ export default function ListAlumniAdminPage() {
     }
   };
 
+  const handleExport = () => {
+    exportToCsv("Direktori_Alumni_SMAN8", alumniList, [
+      { key: "fullName", header: "Nama Alumni" },
+      { key: "nisn", header: "NISN" },
+      { key: "graduationYear", header: "Angkatan" },
+      { key: "university", header: "Universitas" },
+      { key: "faculty", header: "Fakultas" },
+      { key: "major", header: "Program Studi" },
+      { key: "admissionPath", header: "Jalur Masuk" },
+      { key: "cumulativeGpa", header: "IPK" },
+      { key: "scholarshipStatus", header: "Beasiswa" },
+    ]);
+  };
+
   const handleFormSubmit = async (data: Omit<AlumniStudent, "id">) => {
     if (editingAlumni) {
       await updateAlumniInDb(editingAlumni.id, data);
@@ -65,9 +80,9 @@ export default function ListAlumniAdminPage() {
           <p className="text-xs text-slate-500">Database lengkap alumni SMAN 8 Jakarta yang menempuh pendidikan tinggi.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
-            <Download className="w-3.5 h-3.5" />
-            <span>Ekspor Data</span>
+          <Button onClick={handleExport} variant="outline" size="sm" className="h-8 text-xs gap-1.5 hover:bg-slate-100">
+            <Download className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Ekspor CSV</span>
           </Button>
           <Button onClick={handleAddClick} size="sm" className="h-8 text-xs bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 shadow-sm">
             <Plus className="w-3.5 h-3.5" />
