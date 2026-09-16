@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { UserCheck, Mail, Shield, Save, School, CheckCircle2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { CreateAdminForm } from "@/components/admin/CreateAdminForm";
 
 export default function AdminProfilPage() {
   const [name, setName] = useState("Dra. Hj. Nurul Hidayati, M.Pd");
@@ -19,11 +20,14 @@ export default function AdminProfilPage() {
   };
 
   return (
-    <div className="space-y-6 pb-12 max-w-3xl">
+    <div className="space-y-6 pb-12 max-w-4xl">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Kelola Profil Admin</h1>
-        <p className="text-xs text-slate-500">Perbarui informasi akun pengelola sistem Eightracer SMAN 8 Jakarta.</p>
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Kelola Profil & Pengguna Admin</h1>
+        <p className="text-xs text-slate-500">Perbarui informasi akun pengelola dan kelola akses administrator baru.</p>
       </div>
+
+      {/* Security Feature: Restricted Admin Account Creation Form */}
+      <CreateAdminForm />
 
       <Card>
         <CardHeader>
