@@ -28,24 +28,24 @@ export function StudentHero({ student }: StudentHeroProps) {
       {/* Decorative gradient aura */}
       <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-gradient-to-bl from-indigo-100/60 via-emerald-50/40 to-transparent rounded-full blur-2xl pointer-events-none" />
 
-      {/* Back button link */}
-      <div className="mb-6 flex items-center justify-between">
+      {/* Back button & Action buttons */}
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <Link
           href="/dashboard/alumni"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-indigo-600 transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
-          Kembali ke Direktori Alumni & Beasiswa
+          <span>Kembali ke Direktori Alumni</span>
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-start sm:self-auto">
           <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs">
             <Share2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Bagikan Profil</span>
+            <span className="hidden xs:inline">Bagikan</span>
           </Button>
           <Button variant="default" size="sm" className="h-8 gap-1.5 text-xs bg-indigo-600 hover:bg-indigo-700">
             <FileText className="w-3.5 h-3.5" />
-            <span>Ekspor Rapor Linimasa</span>
+            <span>Ekspor Linimasa</span>
           </Button>
         </div>
       </div>

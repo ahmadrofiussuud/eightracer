@@ -85,6 +85,7 @@ export const mockAlumniList: AlumniStudent[] = [
     status: "Aktif",
     email: "siti.rahma@its.ac.id",
     phone: "+62 856-7890-1234",
+    advisorNotes: "Peraih juara 2 Lomba Karya Tulis Ilmiah Nasional bidang energi terbarukan.",
   },
   {
     id: "ALM-2023-005",
@@ -124,6 +125,7 @@ export const mockAlumniList: AlumniStudent[] = [
     status: "Magang / MBKM",
     email: "clara.stephanie@itb.ac.id",
     phone: "+62 815-1234-5678",
+    advisorNotes: "Sedang menyelesaikan tugas akhir aktuaria serta magang di PT Prudential Life Assurance.",
   },
   {
     id: "ALM-2023-007",
@@ -143,6 +145,7 @@ export const mockAlumniList: AlumniStudent[] = [
     status: "Aktif",
     email: "bagas.satria@live.undip.ac.id",
     phone: "+62 822-4567-8901",
+    advisorNotes: "Aktif di peradilan semu (Moot Court) tingkat fakultas.",
   },
   {
     id: "ALM-2021-008",
@@ -162,6 +165,46 @@ export const mockAlumniList: AlumniStudent[] = [
     status: "Magang / MBKM",
     email: "farhan.hakim@student.ub.ac.id",
     phone: "+62 818-7654-3210",
+    advisorNotes: "Penerima beasiswa Djarum Plus, aktif mentoring persiapan UTBK untuk siswa SMAN 8.",
+  },
+  {
+    id: "ALM-2024-009",
+    nisn: "0078190241",
+    fullName: "Zahra Aulia Maharani",
+    graduationYear: 2024,
+    highSchoolClass: "XII MIPA 1",
+    university: "Universitas Indonesia",
+    faculty: "Fakultas Farmasi",
+    major: "Farmasi",
+    admissionPath: "SNBP",
+    currentSemester: 2,
+    cumulativeGpa: 3.86,
+    uktTier: "Golongan 1 (Subsidi KIP-K)",
+    uktFee: 0,
+    scholarshipStatus: "KIP-Kuliah",
+    status: "Aktif Berprestasi",
+    email: "zahra.aulia@farmasi.ui.ac.id",
+    phone: "+62 812-3344-5566",
+    advisorNotes: "Lulusan terbaik angkatan 2024. Penerima KIP-Kuliah jalur SNBP.",
+  },
+  {
+    id: "ALM-2024-010",
+    nisn: "0071928472",
+    fullName: "Kenzo Rafif Prasetyo",
+    graduationYear: 2024,
+    highSchoolClass: "XII MIPA 2",
+    university: "Institut Teknologi Bandung",
+    faculty: "FTI",
+    major: "Teknik Industri",
+    admissionPath: "SNBT",
+    currentSemester: 2,
+    cumulativeGpa: 3.71,
+    uktTier: "Golongan 5",
+    uktFee: 9500000,
+    scholarshipStatus: "Non-Beasiswa",
+    status: "Aktif",
+    email: "kenzo.rafif@itb.ac.id",
+    phone: "+62 813-9988-7766",
   }
 ];
 
@@ -258,14 +301,214 @@ export const mockMilestones: Record<string, Milestone[]> = {
       tags: ["MSIB", "Kampus Merdeka", "Software Engineer"],
     },
   ],
+  "ALM-2022-002": [
+    {
+      id: "MS-101",
+      alumniId: "ALM-2022-002",
+      title: "Penerimaan Siswa Baru SMAN 8 Jakarta",
+      category: "SMA",
+      date: "15 Juli 2019",
+      description: "Masuk kelas unggulan MIPA SMAN 8 dengan nilai ujian masuk tertinggi di gugus IPA.",
+      institution: "SMAN 8 Jakarta",
+      highlightBadge: "Unggulan MIPA",
+      statusType: "info",
+      tags: ["SMAN 8", "PPDB"],
+    },
+    {
+      id: "MS-102",
+      alumniId: "ALM-2022-002",
+      title: "Lolos SNBP STEI ITB",
+      category: "Seleksi Masuk",
+      date: "29 Maret 2022",
+      description: "Diterima di Sekolah Teknik Elektro dan Informatika (STEI) Institut Teknologi Bandung melalui jalur SNBP.",
+      institution: "ITB Bandung",
+      highlightBadge: "SNBP STEI ITB",
+      statusType: "success",
+      tags: ["SNBP", "STEI", "ITB"],
+    },
+    {
+      id: "MS-103",
+      alumniId: "ALM-2022-002",
+      title: "Juara 2 Kontes Robot Terbang Indonesia (KRTI)",
+      category: "Prestasi",
+      date: "14 November 2023",
+      semester: 3,
+      description: "Mewakili tim robotika ITB pada divisi Racing Plane tingkat perguruan tinggi nasional.",
+      institution: "Puspresnas & Kemendikbud",
+      highlightBadge: "Juara 2 Nasional",
+      statusType: "warning",
+      tags: ["Robotika", "KRTI", "ITB"],
+    },
+    {
+      id: "MS-104",
+      alumniId: "ALM-2022-002",
+      title: "Riset Smart Grid & Renewable Energy",
+      category: "Akademik",
+      date: "10 Agustus 2024",
+      semester: 5,
+      gpa: 3.75,
+      description: "Mendapat pendanaan riset PKM-RE Ditjen Diktiristek untuk pengembangan microgrid cerdas.",
+      institution: "STEI ITB",
+      highlightBadge: "Didanai PKM-RE",
+      statusType: "success",
+      tags: ["Riset", "Energi", "PKM"],
+    },
+  ],
+  "ALM-2022-003": [
+    {
+      id: "MS-201",
+      alumniId: "ALM-2022-003",
+      title: "Ketua OSIS SMAN 8 Jakarta",
+      category: "SMA",
+      date: "10 Oktober 2020",
+      description: "Terpilih sebagai Ketua OSIS SMAN 8 periode 2020/2021 dengan program unggulan Eight Olympiad.",
+      institution: "SMAN 8 Jakarta",
+      highlightBadge: "Ketua OSIS",
+      statusType: "info",
+      tags: ["OSIS", "Kepemimpinan"],
+    },
+    {
+      id: "MS-202",
+      alumniId: "ALM-2022-003",
+      title: "Lolos SNBT Manajemen FEB UGM",
+      category: "Seleksi Masuk",
+      date: "23 Juni 2022",
+      description: "Meraih skor UTBK 732.50 dan lolos seleksi nasional SNBT di Fakultas Ekonomika dan Bisnis UGM.",
+      institution: "Universitas Gadjah Mada",
+      highlightBadge: "Skor UTBK 732+",
+      statusType: "success",
+      tags: ["SNBT", "FEB UGM", "UTBK"],
+    },
+    {
+      id: "MS-203",
+      alumniId: "ALM-2022-003",
+      title: "Penetapan Penerima KIP-Kuliah UGM",
+      category: "Beasiswa",
+      date: "01 September 2022",
+      description: "Dinyatakan memenuhi syarat KIP-K Skema 1 dengan fasilitas bebas biaya pendidikan dan tunjangan hidup.",
+      institution: "Ditmawa UGM",
+      highlightBadge: "KIP-K Skema 1",
+      statusType: "warning",
+      tags: ["KIP-K", "UGM", "Beasiswa"],
+    },
+    {
+      id: "MS-204",
+      alumniId: "ALM-2022-003",
+      title: "IPK 3.92 & Finalis ASEAN Business Case",
+      category: "Prestasi",
+      date: "15 Mei 2024",
+      semester: 4,
+      gpa: 3.92,
+      description: "Meraih IPK 3.92 dan lolos ke babak final ASEAN Business Case Competition di Kuala Lumpur.",
+      institution: "FEB UGM & ASEAN Youth",
+      highlightBadge: "Finalis ASEAN",
+      statusType: "success",
+      tags: ["Cumlaude", "International Case", "FEB UGM"],
+    },
+  ],
 };
 
-// Recharts Visualizations Data
+// Function to generate dynamic statistics and charts based on Angkatan (Year)
+export function getFilteredAlumniData(yearFilter: string = "ALL") {
+  const alumni = yearFilter === "ALL" 
+    ? mockAlumniList 
+    : mockAlumniList.filter((s) => s.graduationYear.toString() === yearFilter);
+
+  const total = alumni.length;
+  if (total === 0) {
+    return {
+      alumni: [],
+      stats: {
+        totalAlumni: 0,
+        kipkRecipients: 0,
+        kipkPercentage: 0,
+        averageGpa: 0,
+        ptnAcceptanceRate: 0,
+      },
+      kipkChart: [],
+      gpaChart: [],
+      uktChart: [],
+    };
+  }
+
+  const kipkCount = alumni.filter((s) => s.scholarshipStatus === "KIP-Kuliah").length;
+  const regularCount = alumni.filter((s) => s.scholarshipStatus === "Non-Beasiswa").length;
+  const unggulanCount = alumni.filter((s) => s.scholarshipStatus.includes("Unggulan")).length;
+  const swastaCount = alumni.filter((s) => s.scholarshipStatus.includes("Swasta")).length;
+
+  const kipkPercentage = Math.round((kipkCount / total) * 1000) / 10;
+  const avgGpa = Math.round((alumni.reduce((acc, curr) => acc + curr.cumulativeGpa, 0) / total) * 100) / 100;
+
+  // Pie chart
+  const kipkChart: KipkDistributionData[] = [
+    { name: "Penerima KIP-Kuliah", value: kipkCount, percentage: Math.round((kipkCount / total) * 100), fill: "#10b981" },
+    { name: "Non-Beasiswa (Reguler)", value: regularCount, percentage: Math.round((regularCount / total) * 100), fill: "#6366f1" },
+    { name: "Beasiswa Unggulan & BPI", value: unggulanCount, percentage: Math.round((unggulanCount / total) * 100), fill: "#f59e0b" },
+    { name: "Beasiswa Swasta & Mitra", value: swastaCount, percentage: Math.round((swastaCount / total) * 100), fill: "#8b5cf6" },
+  ].filter(item => item.value > 0);
+
+  // GPA chart
+  const gpaChart: GpaDistributionData[] = [
+    {
+      range: "< 3.00",
+      count: alumni.filter((s) => s.cumulativeGpa < 3.00).length,
+      kipkCount: alumni.filter((s) => s.cumulativeGpa < 3.00 && s.scholarshipStatus === "KIP-Kuliah").length,
+      regularCount: alumni.filter((s) => s.cumulativeGpa < 3.00 && s.scholarshipStatus !== "KIP-Kuliah").length,
+      averageUkt: 5000000,
+    },
+    {
+      range: "3.00 - 3.49",
+      count: alumni.filter((s) => s.cumulativeGpa >= 3.00 && s.cumulativeGpa < 3.50).length,
+      kipkCount: alumni.filter((s) => s.cumulativeGpa >= 3.00 && s.cumulativeGpa < 3.50 && s.scholarshipStatus === "KIP-Kuliah").length,
+      regularCount: alumni.filter((s) => s.cumulativeGpa >= 3.00 && s.cumulativeGpa < 3.50 && s.scholarshipStatus !== "KIP-Kuliah").length,
+      averageUkt: 4800000,
+    },
+    {
+      range: "3.50 - 3.74",
+      count: alumni.filter((s) => s.cumulativeGpa >= 3.50 && s.cumulativeGpa < 3.75).length,
+      kipkCount: alumni.filter((s) => s.cumulativeGpa >= 3.50 && s.cumulativeGpa < 3.75 && s.scholarshipStatus === "KIP-Kuliah").length,
+      regularCount: alumni.filter((s) => s.cumulativeGpa >= 3.50 && s.cumulativeGpa < 3.75 && s.scholarshipStatus !== "KIP-Kuliah").length,
+      averageUkt: 4500000,
+    },
+    {
+      range: "3.75 - 4.00 (Cumlaude)",
+      count: alumni.filter((s) => s.cumulativeGpa >= 3.75).length,
+      kipkCount: alumni.filter((s) => s.cumulativeGpa >= 3.75 && s.scholarshipStatus === "KIP-Kuliah").length,
+      regularCount: alumni.filter((s) => s.cumulativeGpa >= 3.75 && s.scholarshipStatus !== "KIP-Kuliah").length,
+      averageUkt: 4200000,
+    },
+  ];
+
+  // UKT chart
+  const uktChart: UktDistributionData[] = [
+    { tier: "Gol. 1 (KIP-K)", nominal: "Rp 0 - 500rb", count: kipkCount, percentage: Math.round((kipkCount / total) * 100), scholarshipCount: kipkCount },
+    { tier: "Gol. 2 (Rp 1jt)", nominal: "Rp 1.000.000", count: alumni.filter((s) => s.uktTier.includes("Golongan 2")).length, percentage: 10, scholarshipCount: 0 },
+    { tier: "Gol. 3 (Rp 3jt-5jt)", nominal: "Rp 3jt - 5jt", count: alumni.filter((s) => s.uktTier.includes("Golongan 3")).length, percentage: 20, scholarshipCount: 0 },
+    { tier: "Gol. 4 (Rp 6jt-8jt)", nominal: "Rp 6jt - 8jt", count: alumni.filter((s) => s.uktTier.includes("Golongan 4")).length, percentage: 25, scholarshipCount: 0 },
+    { tier: "Gol. 5+ (> Rp 9jt)", nominal: "> Rp 9.000.000", count: alumni.filter((s) => s.uktTier.includes("Golongan 5") || s.uktTier.includes("Golongan 7")).length, percentage: 20, scholarshipCount: 0 },
+  ];
+
+  return {
+    alumni,
+    stats: {
+      totalAlumni: total,
+      kipkRecipients: kipkCount,
+      kipkPercentage: kipkPercentage,
+      averageGpa: avgGpa,
+      ptnAcceptanceRate: 88.5,
+    },
+    kipkChart,
+    gpaChart,
+    uktChart,
+  };
+}
+
+// Global default datasets
 export const mockKipkChartData: KipkDistributionData[] = [
-  { name: "Penerima KIP-Kuliah", value: 238, percentage: 19.1, fill: "#10b981" }, // Emerald 500
-  { name: "Non-Beasiswa (Mandiri)", value: 874, percentage: 70.1, fill: "#6366f1" }, // Indigo 500
-  { name: "Beasiswa Unggulan & BPI", value: 82, percentage: 6.6, fill: "#f59e0b" }, // Amber 500
-  { name: "Beasiswa Swasta & Mitra", value: 52, percentage: 4.2, fill: "#8b5cf6" }, // Violet 500
+  { name: "Penerima KIP-Kuliah", value: 238, percentage: 19.1, fill: "#10b981" },
+  { name: "Non-Beasiswa (Mandiri)", value: 874, percentage: 70.1, fill: "#6366f1" },
+  { name: "Beasiswa Unggulan & BPI", value: 82, percentage: 6.6, fill: "#f59e0b" },
+  { name: "Beasiswa Swasta & Mitra", value: 52, percentage: 4.2, fill: "#8b5cf6" },
 ];
 
 export const mockGpaChartData: GpaDistributionData[] = [
@@ -294,3 +537,300 @@ export const mockStatsOverview = {
   topUniversity: "Universitas Indonesia",
   ptnAcceptanceRate: 86.4,
 };
+
+// Mock data for Data Murid (Active Students)
+export interface ActiveStudent {
+  id: string;
+  nisn: string;
+  fullName: string;
+  classGrade: "X" | "XI" | "XII";
+  className: string;
+  major: "MIPA" | "IPS";
+  gender: "L" | "P";
+  averageReportScore: number;
+  economicStatus: "Keluarga Mampu" | "Prasejahtera (KIP)" | "Menengah";
+  ppdbTrack: "Zonasi" | "Prestasi Akademik" | "Afirmasi (KIP)" | "Perpindahan Tugas";
+  counselorStatus: "Terpantau Baik" | "Butuh Konseling PTN" | "Siap SNBP";
+}
+
+export const mockActiveStudents: ActiveStudent[] = [
+  {
+    id: "STD-001",
+    nisn: "0078291001",
+    fullName: "Aditya Surya Pratama",
+    classGrade: "XII",
+    className: "XII MIPA 1",
+    major: "MIPA",
+    gender: "L",
+    averageReportScore: 92.4,
+    economicStatus: "Prasejahtera (KIP)",
+    ppdbTrack: "Prestasi Akademik",
+    counselorStatus: "Siap SNBP",
+  },
+  {
+    id: "STD-002",
+    nisn: "0079182394",
+    fullName: "Bella Safira Maharani",
+    classGrade: "XII",
+    className: "XII MIPA 2",
+    major: "MIPA",
+    gender: "P",
+    averageReportScore: 91.8,
+    economicStatus: "Menengah",
+    ppdbTrack: "Zonasi",
+    counselorStatus: "Siap SNBP",
+  },
+  {
+    id: "STD-003",
+    nisn: "0071928374",
+    fullName: "Christian Danuarta",
+    classGrade: "XII",
+    className: "XII IPS 1",
+    major: "IPS",
+    gender: "L",
+    averageReportScore: 89.5,
+    economicStatus: "Keluarga Mampu",
+    ppdbTrack: "Prestasi Akademik",
+    counselorStatus: "Terpantau Baik",
+  },
+  {
+    id: "STD-004",
+    nisn: "0081920391",
+    fullName: "Dewi Sekar Kinanti",
+    classGrade: "XI",
+    className: "XI MIPA 3",
+    major: "MIPA",
+    gender: "P",
+    averageReportScore: 93.1,
+    economicStatus: "Prasejahtera (KIP)",
+    ppdbTrack: "Afirmasi (KIP)",
+    counselorStatus: "Terpantau Baik",
+  },
+  {
+    id: "STD-005",
+    nisn: "0089201928",
+    fullName: "Eko Wahyudi Santoso",
+    classGrade: "XI",
+    className: "XI IPS 2",
+    major: "IPS",
+    gender: "L",
+    averageReportScore: 86.2,
+    economicStatus: "Menengah",
+    ppdbTrack: "Zonasi",
+    counselorStatus: "Butuh Konseling PTN",
+  },
+  {
+    id: "STD-006",
+    nisn: "0091829301",
+    fullName: "Fiona Putri Handayani",
+    classGrade: "X",
+    className: "X-B",
+    major: "MIPA",
+    gender: "P",
+    averageReportScore: 90.0,
+    economicStatus: "Keluarga Mampu",
+    ppdbTrack: "Zonasi",
+    counselorStatus: "Terpantau Baik",
+  },
+  {
+    id: "STD-007",
+    nisn: "0092839102",
+    fullName: "Galang Ramadhan",
+    classGrade: "X",
+    className: "X-F",
+    major: "IPS",
+    gender: "L",
+    averageReportScore: 87.8,
+    economicStatus: "Prasejahtera (KIP)",
+    ppdbTrack: "Afirmasi (KIP)",
+    counselorStatus: "Terpantau Baik",
+  },
+];
+
+// Mock data for Asesmen Minat Bakat
+export interface StudentAssessment {
+  id: string;
+  studentName: string;
+  className: string;
+  riasecTopCode: string; // e.g., "IRC", "SEC"
+  primaryInterest: string;
+  recommendedMajors: string[];
+  learningStyle: "Visual" | "Auditori" | "Kinestetik";
+  iqEstimateScore: number;
+  readinessCategory: "Sangat Siap PTN" | "Siap dengan Bimbingan" | "Perlu Eksplorasi Jurusan";
+}
+
+export const mockAssessments: StudentAssessment[] = [
+  {
+    id: "ASM-001",
+    studentName: "Aditya Surya Pratama",
+    className: "XII MIPA 1",
+    riasecTopCode: "IRC (Investigative, Realistic, Conventional)",
+    primaryInterest: "Teknologi Informasi & Sains Komputasi",
+    recommendedMajors: ["Ilmu Komputer UI", "Teknik Informatika ITB", "Sistem Informasi ITS"],
+    learningStyle: "Visual",
+    iqEstimateScore: 128,
+    readinessCategory: "Sangat Siap PTN",
+  },
+  {
+    id: "ASM-002",
+    studentName: "Bella Safira Maharani",
+    className: "XII MIPA 2",
+    riasecTopCode: "ISR (Investigative, Social, Realistic)",
+    primaryInterest: "Kesehatan, Kedokteran & Bioteknologi",
+    recommendedMajors: ["Pendidikan Dokter UNAIR", "Farmasi UI", "Bioteknologi UGM"],
+    learningStyle: "Kinestetik",
+    iqEstimateScore: 125,
+    readinessCategory: "Sangat Siap PTN",
+  },
+  {
+    id: "ASM-003",
+    studentName: "Christian Danuarta",
+    className: "XII IPS 1",
+    riasecTopCode: "ESC (Enterprising, Social, Conventional)",
+    primaryInterest: "Bisnis, Manajemen & Hubungan Internasional",
+    recommendedMajors: ["Manajemen FEB UGM", "Ilmu Hubungan Internasional UI", "Akuntansi Undip"],
+    learningStyle: "Auditori",
+    iqEstimateScore: 120,
+    readinessCategory: "Siap dengan Bimbingan",
+  },
+  {
+    id: "ASM-004",
+    studentName: "Dewi Sekar Kinanti",
+    className: "XI MIPA 3",
+    riasecTopCode: "AIR (Artistic, Investigative, Realistic)",
+    primaryInterest: "Arsitektur & Desain Produk Industri",
+    recommendedMajors: ["Arsitektur ITB", "Teknik Lingkungan UI", "Desain Produk ITS"],
+    learningStyle: "Visual",
+    iqEstimateScore: 124,
+    readinessCategory: "Sangat Siap PTN",
+  },
+  {
+    id: "ASM-005",
+    studentName: "Eko Wahyudi Santoso",
+    className: "XI IPS 2",
+    riasecTopCode: "SAE (Social, Artistic, Enterprising)",
+    primaryInterest: "Ilmu Komunikasi & Psikologi Sosial",
+    recommendedMajors: ["Ilmu Komunikasi Unpad", "Psikologi UI", "Ilmu Hukum UGM"],
+    learningStyle: "Auditori",
+    iqEstimateScore: 116,
+    readinessCategory: "Perlu Eksplorasi Jurusan",
+  },
+];
+
+// Mock data for Eligibilitas SNBP (40% Kuota Sekolah Akreditasi A)
+export interface EligibilityCandidate {
+  rank: number;
+  studentName: string;
+  nisn: string;
+  className: string;
+  major: "MIPA" | "IPS";
+  reportScoreAvg: number; // Nilai Rapor Sem 1-5
+  achievementPoints: number; // Bobot Sertifikat OSN/Lomba
+  finalScore: number;
+  quotaStatus: "Eligible (Kuota 40%)" | "Cadangan" | "Non-Eligible";
+  targetMajorPilihan1: string;
+  targetMajorPilihan2: string;
+  kipkStatus: boolean;
+}
+
+export const mockEligibilityList: EligibilityCandidate[] = [
+  {
+    rank: 1,
+    studentName: "Aditya Surya Pratama",
+    nisn: "0078291001",
+    className: "XII MIPA 1",
+    major: "MIPA",
+    reportScoreAvg: 92.4,
+    achievementPoints: 10.0,
+    finalScore: 94.4,
+    quotaStatus: "Eligible (Kuota 40%)",
+    targetMajorPilihan1: "Ilmu Komputer - Univ. Indonesia",
+    targetMajorPilihan2: "Teknik Informatika - ITB",
+    kipkStatus: true,
+  },
+  {
+    rank: 2,
+    studentName: "Bella Safira Maharani",
+    nisn: "0079182394",
+    className: "XII MIPA 2",
+    major: "MIPA",
+    reportScoreAvg: 91.8,
+    achievementPoints: 8.5,
+    finalScore: 93.5,
+    quotaStatus: "Eligible (Kuota 40%)",
+    targetMajorPilihan1: "Pendidikan Dokter - Univ. Airlangga",
+    targetMajorPilihan2: "Farmasi - Univ. Indonesia",
+    kipkStatus: false,
+  },
+  {
+    rank: 3,
+    studentName: "Christian Danuarta",
+    nisn: "0071928374",
+    className: "XII IPS 1",
+    major: "IPS",
+    reportScoreAvg: 89.5,
+    achievementPoints: 6.0,
+    finalScore: 90.7,
+    quotaStatus: "Eligible (Kuota 40%)",
+    targetMajorPilihan1: "Manajemen - Univ. Gadjah Mada",
+    targetMajorPilihan2: "Ilmu Ekonomi - Univ. Indonesia",
+    kipkStatus: false,
+  },
+  {
+    rank: 4,
+    studentName: "Fajar Nugraha",
+    nisn: "0074829102",
+    className: "XII MIPA 3",
+    major: "MIPA",
+    reportScoreAvg: 89.2,
+    achievementPoints: 4.0,
+    finalScore: 90.0,
+    quotaStatus: "Eligible (Kuota 40%)",
+    targetMajorPilihan1: "Teknik Elektro - ITB",
+    targetMajorPilihan2: "Teknik Elektro - ITS",
+    kipkStatus: true,
+  },
+  {
+    rank: 5,
+    studentName: "Gita Anindya",
+    nisn: "0072948103",
+    className: "XII IPS 2",
+    major: "IPS",
+    reportScoreAvg: 88.6,
+    achievementPoints: 5.0,
+    finalScore: 89.6,
+    quotaStatus: "Eligible (Kuota 40%)",
+    targetMajorPilihan1: "Ilmu Hukum - Univ. Indonesia",
+    targetMajorPilihan2: "Ilmu Hubungan Internasional - UGM",
+    kipkStatus: false,
+  },
+  {
+    rank: 6,
+    studentName: "Hendra Wijaya",
+    nisn: "0073849102",
+    className: "XII MIPA 4",
+    major: "MIPA",
+    reportScoreAvg: 87.5,
+    achievementPoints: 2.0,
+    finalScore: 87.9,
+    quotaStatus: "Cadangan",
+    targetMajorPilihan1: "Teknik Sipil - Undip",
+    targetMajorPilihan2: "Teknik Mesin - Unpad",
+    kipkStatus: false,
+  },
+  {
+    rank: 7,
+    studentName: "Indah Permata",
+    nisn: "0075938102",
+    className: "XII IPS 3",
+    major: "IPS",
+    reportScoreAvg: 86.4,
+    achievementPoints: 0.0,
+    finalScore: 86.4,
+    quotaStatus: "Non-Eligible",
+    targetMajorPilihan1: "Akuntansi - Univ. Brawijaya",
+    targetMajorPilihan2: "Pendidikan Bahasa Inggris - UNJ",
+    kipkStatus: false,
+  },
+];
