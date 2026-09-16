@@ -1,70 +1,71 @@
 # Eightracer 🎓
 **Sistem Pelacakan Siswa & Capaian Alumni SMAN 8 Jakarta**
 
-Eightracer adalah aplikasi berbasis web yang dirancang untuk melacak rekam jejak akademik siswa sejak masa penerimaan SMA, seleksi masuk perguruan tinggi negeri (SNBP/SNBT/Mandiri), hingga progres perkuliahan, pembiayaan UKT, dan keberhasilan beasiswa (KIP-Kuliah, Beasiswa Unggulan).
+Eightracer adalah aplikasi manajemen sekolah dan pelacakan akademik terintegrasi yang dirancang untuk memantau perjalanan siswa SMAN 8 Jakarta dari masa penerimaan SMA, asesmen minat bakat, penentuan eligibilitas kuota SNBP, hingga rekam jejak perkuliahan, pembiayaan UKT, dan beasiswa KIP-Kuliah di perguruan tinggi negeri.
 
 ---
 
-## Fitur Utama
+## 👥 Struktur Peran & Hak Akses (Role-Based Access)
 
-1. **Dashboard Alumni & Beasiswa (`/dashboard/alumni`)**:
-   - **Kartu Metrik KPI**: Total alumni terdata, persentase penerima beasiswa KIP-Kuliah, rata-rata IPK kumulatif, dan tingkat kelulusan PTN.
-   - **Diagram Distribusi KIP-K (Recharts Pie/Donut Chart)**: Visualisasi proporsi mahasiswa beasiswa KIP-Kuliah vs non-beasiswa reguler vs beasiswa unggulan/swasta.
-   - **Diagram Distribusi IPK (Recharts Grouped Bar Chart)**: Sebaran capaian indeks prestasi kumulatif mahasiswa per rentang nilai (< 3.00, 3.00-3.24, 3.25-3.49, 3.50-3.74, 3.75-4.00 Cumlaude) membandingkan penerima KIP-K vs mahasiswa reguler.
-   - **Distribusi UKT (Recharts Bar Chart)**: Evaluasi kelompok Uang Kuliah Tunggal (Golongan 1 hingga 6+).
-   - **Direktori Alumni Interaktif**: Tabel pencarian dan filter cerdas berdasarkan prodi, perguruan tinggi, dan status beasiswa dengan tautan langsung menuju linimasa individu.
+Sistem Eightracer memiliki 3 tingkatan akses sesuai spesifikasi PRD:
 
-2. **Linimasa Interaktif Alumni (`/dashboard/alumni/[id]`)**:
-   - **Profil Hero Mahasiswa**: Menampilkan NISN, asal angkatan/kelas SMA, universitas, fakultas & program studi, jalur masuk, semester aktif, dan IPK terkini.
-   - **Linimasa Vertikal (Vertical Timeline)**: Menyajikan tahapan perjalanan siswa dari PPDB SMA, prestasi OSN, kelulusan SNBP pilihan pertama, verifikasi KIP-Kuliah, Dean's List per semester, peran asisten laboratorium, hingga program Magang MSIB Kampus Merdeka.
-   - **Filter Linimasa**: Penyaringan instan berdasarkan kategori (Semua, SMA & Prestasi, Seleksi PTN, Beasiswa KIP-K, Akademik, Magang & Karir).
-   - **Panel Analitik Samping**: Grafik tren IPK per semester (IPS), status pencarian/bantuan biaya hidup KIP-K, dan catatan komunikasi guru BP/BK.
-
-3. **Navigasi Lengkap**:
-   - **Overview**: Ringkasan pusat kendali Eightracer.
-   - **Data Murid**: Database siswa aktif kelas X-XII.
-   - **Asesmen**: Pemetaan minat bakat dan hasil tes psikologi.
-   - **Eligibilitas**: Pemeringkatan kuota SNBP 40% siswa berprestasi.
-   - **Dashboard Alumni & Beasiswa**: Visualisasi analitik dan linimasa lulusan.
-
-4. **Integrasi Supabase Fleksibel**:
-   - Konfigurasi siap pakai di `src/lib/supabase.ts`.
-   - Terintegrasi otomatis dengan **fallback data dummy cerdas** sehingga UI dapat langsung berjalan tanpa harus terhubung ke database online terlebih dahulu.
+1. **Publik (Landing Page)**:
+   - Akses publik di `/` yang memuat pengenalan sistem, showcase fitur linimasa & analitik beasiswa, serta tombol CTA masuk ke portal.
+2. **Admin Sekolah (`/admin/*`)**:
+   - Beranda ringkasan agregat murid, eligibilitas, dan tracer study.
+   - Kelola Profil Admin.
+   - Data Murid (Biodata, Latar Belakang Ekonomi, Asesmen Karakteristik).
+   - Penentuan Eligibilitas (Input Data Pendukung, Kriteria & Cek Status).
+   - Alumni ke PT / Study Tracer (Input & Kelola, List Alumni, Progress PT).
+   - **Fitur Unggulan Tim**:
+     - *Timeline Individu* (`/admin/alumni-beasiswa/timeline`)
+     - *Analitik Beasiswa* (`/admin/alumni-beasiswa/analitik`)
+3. **Siswa & Calon Alumni (`/student/*`)**:
+   - Portal mandiri read-only & self-service untuk mengecek status eligibilitas SNBP kuota 40%, riwayat asesmen RIASEC, serta direktori dan progres alumni di PTN.
 
 ---
 
-## Petunjuk Menjalankan Proyek
+## 🌟 Fitur Unggulan (Flagship Features)
 
-### 1. Prasyarat
-- Node.js versi 18 ke atas (disarankan v20 atau v24)
-- npm atau pnpm
+1. **Analitik Beasiswa (`/admin/alumni-beasiswa/analitik`)**:
+   - **Pertumbuhan KIP-Kuliah per Tahun (2020 - 2024)**: Diagram gabungan batang & garis (*ComposedChart*) tren penerima beasiswa KIP-K vs mahasiswa reguler dan rata-rata IPK.
+   - **Korelasi Nilai Rapor SMA vs Beasiswa**: Analisis hubungan antara nilai rapor SMA dengan keberhasilan meraih beasiswa dan capaian IPK universitas.
+   - **Distribusi Biaya Kuliah (UKT)**: Visualisasi kelompok UKT Golongan 1 s.d. 6+.
+   - **Kartu Metrik KPI**: Total dana subsidi UKT terserap, retensi IPK > 3.50, dan perguruan tinggi tujuan utama.
 
-### 2. Instalasi Dependensi
+2. **Timeline Individu / Linimasa (`/admin/alumni-beasiswa/timeline`)**:
+   - **Pemilih Profil Siswa**: Penggantian instan antar profil alumni.
+   - **Linimasa Vertikal Kronologis**: Menghubungkan seluruh simpul perjalanan: PPDB SMA, prestasi OSN, kelulusan SNBP, penetapan beasiswa KIP-K, Dean's List per semester, asisten laboratorium, hingga magang MSIB.
+   - **Panel Analitik Samping**: Grafik tren IPK per semester (IPS), status pencairan dana KIP-K, dan catatan komunikasi guru BP/BK.
+
+---
+
+## 💻 Panduan Menjalankan Proyek
+
+### 1. Instalasi Dependensi
 ```bash
 npm install
 ```
 
-### 3. Konfigurasi Lingkungan (Opsional)
-Jika Anda ingin menyambungkan langsung ke proyek Supabase cloud:
-1. Salin `.env.example` ke `.env.local`:
-   ```bash
-   cp .env.example .env.local
-   ```
-2. Isi URL dan Anon Key dari dashboard Supabase Anda:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-   ```
-*(Catatan: Jika variabel tidak diisi, Eightracer akan otomatis menggunakan mock data lokal dengan notifikasi informatif di konsol).*
+### 2. Konfigurasi Lingkungan (Opsional)
+Salin `.env.example` menjadi `.env.local` untuk menghubungkan ke instance Supabase:
+```bash
+cp .env.example .env.local
+```
+Isi konfigurasi Anda:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+*(Catatan: Aplikasi dilengkapi fallback data cerdas di `src/data/mockData.ts` sehingga dapat langsung dijalankan tanpa database online).*
 
-### 4. Menjalankan Development Server
+### 3. Menjalankan Server Lokal
 ```bash
 npm run dev
 ```
+Buka browser di: [http://localhost:3000](http://localhost:3000)
 
-Buka browser Anda di [http://localhost:3000](http://localhost:3000). Aplikasi akan otomatis mengarahkan Anda ke Dashboard Alumni & Beasiswa.
-
-### 5. Build Produksi
+### 4. Build Produksi
 ```bash
 npm run build
 npm run start
@@ -72,45 +73,67 @@ npm run start
 
 ---
 
-## Skema Tabel Rekomendasi untuk Supabase (SQL)
+## 🗄️ Skema Database Supabase Resmi (PRD Schema)
 
-Jika Anda ingin membuat tabel di Supabase SQL Editor:
+Berikut adalah skema tabel resmi PostgreSQL/Supabase yang aman untuk dijalankan pada SQL Editor:
 
 ```sql
--- Tabel Profil Alumni
-CREATE TABLE alumni (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  nisn VARCHAR(10) UNIQUE NOT NULL,
+-- Pastikan ekstensi UUID aktif
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- 1. Domain Biodata Murid (Tabel Induk)
+CREATE TABLE IF NOT EXISTS students (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  nisn VARCHAR(50) UNIQUE NOT NULL,
   full_name VARCHAR(255) NOT NULL,
-  graduation_year INT NOT NULL,
-  high_school_class VARCHAR(50) NOT NULL,
-  university VARCHAR(255) NOT NULL,
-  faculty VARCHAR(255) NOT NULL,
-  major VARCHAR(255) NOT NULL,
-  admission_path VARCHAR(50) NOT NULL,
-  current_semester INT DEFAULT 1,
-  cumulative_gpa NUMERIC(3,2) NOT NULL,
-  ukt_tier VARCHAR(100),
-  ukt_fee BIGINT DEFAULT 0,
-  scholarship_status VARCHAR(100) DEFAULT 'Non-Beasiswa',
-  status VARCHAR(100) DEFAULT 'Aktif',
+  nickname VARCHAR(100),
+  current_class VARCHAR(50),
+  social_aid_status VARCHAR(50), -- PIP, PKH, KIS, dll
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Tabel Linimasa Perjalanan Mahasiswa
-CREATE TABLE alumni_milestones (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  alumni_id UUID REFERENCES alumni(id) ON DELETE CASCADE,
-  title VARCHAR(255) NOT NULL,
-  category VARCHAR(50) NOT NULL,
-  date VARCHAR(100) NOT NULL,
-  semester INT,
-  description TEXT,
-  gpa NUMERIC(3,2),
-  highlight_badge VARCHAR(100),
-  institution VARCHAR(255),
-  status_type VARCHAR(50) DEFAULT 'info',
-  tags TEXT[],
+-- 2. Domain Asesmen Karakteristik
+CREATE TABLE IF NOT EXISTS assessments (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  student_id UUID REFERENCES students(id) ON DELETE CASCADE,
+  learning_style VARCHAR(100),
+  personality_type VARCHAR(100), -- Melankolis, Plegmatis, dll
+  riasec_type VARCHAR(50),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. Domain Penentuan Eligibilitas
+CREATE TABLE IF NOT EXISTS eligibility (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  student_id UUID REFERENCES students(id) ON DELETE CASCADE,
+  avg_rapor_score DECIMAL(5,2),
+  tka_score DECIMAL(5,2),
+  is_eligible BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. Domain Data Alumni ke Perguruan Tinggi (Masuk PT)
+CREATE TABLE IF NOT EXISTS alumni_admissions (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  student_id UUID REFERENCES students(id) ON DELETE CASCADE,
+  university_name VARCHAR(255),
+  study_program VARCHAR(255),
+  admission_path VARCHAR(100), -- SNBP, SNBT, Mandiri, dll
+  is_kipk_applicant BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 5. Domain Data Alumni di Perguruan Tinggi (Fitur Unggulan B4)
+CREATE TABLE IF NOT EXISTS alumni_progress (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  student_id UUID REFERENCES students(id) ON DELETE CASCADE,
+  university_name VARCHAR(255),
+  current_semester INT,
+  gpa DECIMAL(3,2), -- IPK
+  is_kipk_receiver BOOLEAN DEFAULT false,
+  other_scholarships TEXT,
+  ukt_amount DECIMAL(15,2),
+  timeline_status VARCHAR(255), -- "Diterima", "Lulus Semester 1", "Menerima Beasiswa"
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ```
