@@ -102,24 +102,18 @@ export default function FAQPage() {
       </header>
 
       {/* Hero FAQ Section */}
-      <section className="relative bg-amber-50/60 pt-12 pb-16 overflow-hidden">
-        {/* Playful background shapes */}
-        <div className="absolute top-4 left-6 w-16 h-16 rounded-full bg-yellow-400 opacity-60 animate-bounce pointer-events-none" style={{ animationDuration: "3s" }} />
-        <div className="absolute top-2 right-12 w-12 h-28 rounded-2xl bg-indigo-600 rotate-12 pointer-events-none opacity-20" />
-        <div className="absolute bottom-4 right-6 w-20 h-20 rounded-full border-4 border-indigo-300 pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-black text-indigo-700 bg-yellow-300 border border-yellow-400 rounded-full px-3.5 py-1 shadow-xs">
-            <HelpCircle className="w-3.5 h-3.5" /> Pusat Bantuan & FAQ
+      <section className="relative bg-slate-50 border-b border-slate-100 pt-12 pb-14 overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10 space-y-3">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-3 py-1">
+            <HelpCircle className="w-3.5 h-3.5" /> Pusat Bantuan & Pertanyaan Umum
           </span>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-            Punya Pertanyaan? <br />
-            <span className="text-indigo-600 font-cherry text-4xl sm:text-6xl">Kami Punya Jawabannya!</span> 💡
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Punya Pertanyaan? <span className="text-indigo-600">Temukan Jawabannya di Sini</span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
-            Temukan jawaban lengkap seputar pendaftaran siswa, akses admin sekolah, eligibilitas, dan keamanan data.
+          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed">
+            Temukan jawaban lengkap seputar pendaftaran siswa, akses akun admin, eligibilitas, dan keamanan data.
           </p>
 
           {/* Search Bar */}

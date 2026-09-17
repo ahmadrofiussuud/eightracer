@@ -115,15 +115,11 @@ export default function LandingPage() {
             Platform Tracking Siswa & Alumni PTN
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-5">
-            Pantau{" "}
-            <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">Perjalanan</span>{" "}
-            Siswa<br />
-            dari{" "}
-            <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">SMA</span>{" "}
-            ke{" "}
-            <span className="relative inline-block">
-              <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">PTN</span>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-5 tracking-tight">
+            Pantau <span className="text-indigo-600">Perjalanan</span> Siswa<br />
+            dari <span className="text-indigo-600">SMA</span> ke{" "}
+            <span className="relative inline-block text-indigo-600">
+              PTN
               <span className="absolute -bottom-1 left-0 w-full h-2.5 bg-yellow-300 -z-10 rounded-sm" />
             </span>
           </h1>
@@ -337,13 +333,13 @@ export default function LandingPage() {
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-1.5 text-xs font-black text-indigo-700 bg-yellow-300 border border-yellow-400 rounded-full px-3.5 py-1 mb-3 shadow-xs">
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-3 py-1 mb-3">
               <HelpCircle className="w-3.5 h-3.5" /> Pertanyaan Umum (FAQ)
             </span>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900">
-              Punya Pertanyaan? <br />
-              <span className="text-indigo-600 font-cherry text-4xl md:text-5xl">Kami Punya Jawabannya!</span> 💡
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Punya Pertanyaan? <span className="text-indigo-600">Temukan Jawabannya di Sini</span>
             </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1.5">Pertanyaan paling sering ditanyakan seputar pendaftaran, akun admin, dan fitur Eightracer.</p>
           </div>
 
           {/* Category Filter Pills */}
