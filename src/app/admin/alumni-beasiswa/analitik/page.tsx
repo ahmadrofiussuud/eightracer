@@ -34,6 +34,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MetricCard } from "@/components/analytics/MetricCard";
+import { exportToCsv } from "@/lib/export";
 
 // Mock data: KIP-K Receivers Trend per Year
 const mockYearlyKipkTrend = [
@@ -66,6 +67,20 @@ const mockUktBreakdown = [
 export default function AnalitikBeasiswaPage() {
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
 
+  const handleExport = () => {
+    exportToCsv(
+      "Analitik_Beasiswa_PDDIKTI_SMAN8",
+      mockYearlyKipkTrend,
+      [
+        { key: "year", header: "Tahun" },
+        { key: "kipkCount", header: "Jumlah Penerima KIP-K" },
+        { key: "nonBeasiswa", header: "Non-Beasiswa Reguler" },
+        { key: "total", header: "Total Mahasiswa" },
+        { key: "avgGpa", header: "Rata-rata IPK" },
+      ]
+    );
+  };
+
   return (
     <div className="space-y-6 sm:space-y-8 pb-16">
       {/* Top Banner & Title */}
@@ -93,7 +108,7 @@ export default function AnalitikBeasiswaPage() {
               <span>Ke Timeline Individu</span>
             </Button>
           </Link>
-          <Button size="sm" className="h-8 gap-1.5 text-xs bg-indigo-600 hover:bg-indigo-700">
+          <Button onClick={handleExport} size="sm" className="h-8 gap-1.5 text-xs bg-indigo-600 hover:bg-indigo-700">
             <Download className="w-3.5 h-3.5" />
             <span>Ekspor Data PDDIKTI</span>
           </Button>

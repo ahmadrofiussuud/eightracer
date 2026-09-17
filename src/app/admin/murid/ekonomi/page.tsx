@@ -7,8 +7,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { mockActiveStudents } from "@/data/mockData";
+import { exportToCsv } from "@/lib/export";
 
 export default function LatarBelakangEkonomiPage() {
+  const handleExport = () => {
+    exportToCsv(
+      "Rekap_DTKS_SMAN8",
+      mockActiveStudents,
+      [
+        { key: "fullName", header: "Nama Siswa" },
+        { key: "nisn", header: "NISN" },
+        { key: "className", header: "Kelas" },
+        { key: "economicStatus", header: "Status Ekonomi" },
+        { key: "ppdbTrack", header: "Jalur PPDB" },
+      ]
+    );
+  };
+
   return (
     <div className="space-y-6 pb-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -16,7 +31,7 @@ export default function LatarBelakangEkonomiPage() {
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Latar Belakang Ekonomi Murid</h1>
           <p className="text-xs text-slate-500">Pendataan status ekonomi keluarga, verifikasi DTKS Kemensos, dan kesiapan afirmasi KIP-Kuliah.</p>
         </div>
-        <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5 self-start sm:self-auto">
+        <Button onClick={handleExport} variant="outline" size="sm" className="h-8 text-xs gap-1.5 self-start sm:self-auto hover:bg-slate-100">
           <Download className="w-3.5 h-3.5" />
           <span>Unduh Rekap DTKS</span>
         </Button>

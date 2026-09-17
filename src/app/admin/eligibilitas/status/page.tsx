@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { mockEligibilityList } from "@/data/mockData";
+import { exportToCsv } from "@/lib/export";
 
 export default function KriteriaCekStatusPage() {
   const [selectedMajor, setSelectedMajor] = useState("ALL");
@@ -17,6 +18,24 @@ export default function KriteriaCekStatusPage() {
     return item.major === selectedMajor;
   });
 
+  const handleExport = () => {
+    exportToCsv(
+      "SK_Kuota_Eligibilitas_SNBP_SMAN8",
+      filtered,
+      [
+        { key: "rank", header: "Peringkat" },
+        { key: "studentName", header: "Nama Siswa" },
+        { key: "nisn", header: "NISN" },
+        { key: "className", header: "Kelas" },
+        { key: "reportScoreAvg", header: "Rapor Sem 1-5" },
+        { key: "achievementPoints", header: "Poin Prestasi" },
+        { key: "finalScore", header: "Skor Akhir" },
+        { key: "quotaStatus", header: "Status Kuota" },
+        { key: "targetMajorPilihan1", header: "Pilihan 1 PTN" },
+      ]
+    );
+  };
+
   return (
     <div className="space-y-6 pb-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -25,7 +44,7 @@ export default function KriteriaCekStatusPage() {
           <p className="text-xs text-slate-500">Hasil kalkulasi pemeringkatan kuota 40% siswa terbaik untuk seleksi nasional SNBP 2025.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
+          <Button onClick={handleExport} variant="outline" size="sm" className="h-8 text-xs gap-1.5 hover:bg-slate-100">
             <Download className="w-3.5 h-3.5" />
             <span>Ekspor SK Kuota</span>
           </Button>
