@@ -19,12 +19,13 @@ import {
   LogOut,
   ChevronDown,
   ChevronRight,
-  School,
+
   X,
   FileCheck2,
   Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 interface AdminSidebarProps {
   isOpen?: boolean;
@@ -81,8 +82,8 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
               className="flex items-center gap-3 group"
               onClick={onClose}
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-indigo-100 group-hover:scale-105 transition-transform">
-                <School className="w-5 h-5" />
+              <div className="group-hover:scale-105 transition-transform">
+                <EightracerLogo size={40} withBackground />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">

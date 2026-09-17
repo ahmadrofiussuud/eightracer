@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { School, Mail, ArrowLeft, Send, CheckCircle2 } from "lucide-react";
+import { Mail, ArrowLeft, Send, CheckCircle2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -21,9 +22,7 @@ export default function ForgotPasswordPage() {
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none" />
 
       <Link href="/" className="flex items-center gap-3 mb-8 group">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center text-white shadow-xl group-hover:scale-105 transition-transform">
-          <School className="w-6 h-6" />
-        </div>
+        <EightracerLogo size={48} withBackground />
         <div className="flex flex-col">
           <span className="font-black text-2xl tracking-tight text-white">
             Eight<span className="text-indigo-400">racer</span>

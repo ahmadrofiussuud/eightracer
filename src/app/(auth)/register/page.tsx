@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  School,
+
   Lock,
   Mail,
   User,
@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
+import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -126,9 +127,7 @@ export default function RegisterPage() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group relative z-10">
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-white border border-white/30">
-            <School className="w-5 h-5" />
-          </div>
+          <EightracerLogo size={40} withBackground />
           <div>
             <div className="font-black text-xl text-white tracking-tight">Eightracer</div>
             <div className="text-xs text-white/60">SMAN 8 Jakarta</div>
@@ -182,9 +181,7 @@ export default function RegisterPage() {
         {/* Mobile navbar */}
         <header className="lg:hidden bg-white border-b border-slate-100 px-4 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center">
-              <School className="w-4 h-4 text-white" />
-            </div>
+            <EightracerLogo size={32} withBackground />
             <span className="font-black text-slate-900">Eight<span className="text-indigo-600">racer</span></span>
           </Link>
           <Link href="/login" className="text-xs text-slate-500 hover:text-slate-800 font-medium">Sudah punya akun?</Link>

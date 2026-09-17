@@ -12,11 +12,11 @@ import {
   Sparkles,
   ChevronRight,
   X,
-  School,
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "./SidebarContext";
+import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 interface NavItem {
   name: string;
@@ -89,8 +89,8 @@ export function Sidebar() {
               className="flex items-center gap-3 group"
               onClick={() => setIsOpen(false)}
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-indigo-100 group-hover:scale-105 transition-transform">
-                <School className="w-5 h-5" />
+              <div className="group-hover:scale-105 transition-transform">
+                <EightracerLogo size={40} withBackground />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">

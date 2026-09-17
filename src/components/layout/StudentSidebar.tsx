@@ -11,12 +11,13 @@ import {
   GraduationCap,
   TrendingUp,
   LogOut,
-  School,
+
   X,
   Sparkles,
   ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 interface StudentSidebarProps {
   isOpen?: boolean;
@@ -88,8 +89,8 @@ export function StudentSidebar({ isOpen, onClose }: StudentSidebarProps) {
               className="flex items-center gap-3 group"
               onClick={onClose}
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-emerald-100 group-hover:scale-105 transition-transform">
-                <School className="w-5 h-5" />
+              <div className="group-hover:scale-105 transition-transform">
+                <EightracerLogo size={40} withBackground />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
