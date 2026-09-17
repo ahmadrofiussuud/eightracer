@@ -16,53 +16,11 @@ import {
   LineChart,
   ClipboardList,
   ChevronRight,
-  HelpCircle,
-  ChevronDown,
-  Search,
-  Sparkles,
-  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 export default function LandingPage() {
-  const [openFaq, setOpenFaq] = React.useState<number | null>(0);
-  const [faqFilter, setFaqFilter] = React.useState<string>("ALL");
-
-  const faqs = [
-    {
-      cat: "Akun",
-      q: "Bagaimana cara mendaftar akun Siswa?",
-      a: "Siswa dapat mendaftar mandiri melalui tombol 'Daftar' di halaman utama, menggunakan Email atau Google Login. Masukkan 10 digit NISN kamu untuk verifikasi kesiswaan otomatis!",
-      badgeBg: "bg-indigo-100 text-indigo-700",
-    },
-    {
-      cat: "Akun",
-      q: "Bagaimana cara mendapatkan akun Admin Sekolah?",
-      a: "Akun Admin Sekolah disediakan langsung oleh pengelola sekolah (tidak melalui pendaftaran mandiri) demi menjaga privasi & keamanan data sensitif seluruh murid.",
-      badgeBg: "bg-amber-100 text-amber-800",
-    },
-    {
-      cat: "Keamanan",
-      q: "Mengapa akun Admin otomatis ter-logout dari HP/laptop lain?",
-      a: "Demi keamanan tingkat tinggi, akun Admin menerapkan aturan Single Device Login. Jika akun digunakan di perangkat baru, sesi di perangkat lama otomatis diakhiri.",
-      badgeBg: "bg-rose-100 text-rose-700",
-    },
-    {
-      cat: "Fitur",
-      q: "Apa itu fitur Timeline Individu Alumni?",
-      a: "Timeline Individu adalah visualisasi perjalanan kronologis alumni dari SMA, kelulusan, seleksi PTN, hingga pencapaian IPK dan beasiswa per semester di kampus!",
-      badgeBg: "bg-emerald-100 text-emerald-800",
-    },
-    {
-      cat: "Fitur",
-      q: "Bagaimana status Eligibilitas 40% SNBP dihitung?",
-      a: "Status eligibilitas dihitung otomatis menggabungkan rata-rata nilai rapor semester 1-5 (bobot 75%) dan portofolio prestasi lomba (bobot 25%).",
-      badgeBg: "bg-violet-100 text-violet-800",
-    },
-  ];
-
-  const filteredFaqs = faqs.filter((f) => faqFilter === "ALL" || f.cat === faqFilter);
   return (
     <div className="min-h-screen bg-white text-slate-800 flex flex-col overflow-x-hidden">
       {/* Navbar */}
@@ -81,6 +39,7 @@ export default function LandingPage() {
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-500">
             <a href="#fitur" className="hover:text-slate-900 transition-colors">Fitur</a>
             <a href="#statistik" className="hover:text-slate-900 transition-colors">Statistik</a>
+            <a href="#tentang" className="hover:text-slate-900 transition-colors">Tentang</a>
             <Link href="/faq" className="hover:text-slate-900 transition-colors">FAQ</Link>
           </nav>
 
@@ -115,11 +74,15 @@ export default function LandingPage() {
             Platform Tracking Siswa & Alumni PTN
           </span>
 
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-5 tracking-tight">
-            Pantau <span className="text-indigo-600">Perjalanan</span> Siswa<br />
-            dari <span className="text-indigo-600">SMA</span> ke{" "}
-            <span className="relative inline-block text-indigo-600">
-              PTN
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-5">
+            Pantau{" "}
+            <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">Perjalanan</span>{" "}
+            Siswa<br />
+            dari{" "}
+            <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">SMA</span>{" "}
+            ke{" "}
+            <span className="relative inline-block">
+              <span className="font-cherry font-normal text-indigo-600 text-[2.8rem] md:text-[3.5rem]">PTN</span>
               <span className="absolute -bottom-1 left-0 w-full h-2.5 bg-yellow-300 -z-10 rounded-sm" />
             </span>
           </h1>
@@ -325,87 +288,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FAQ SECTION ── */}
-      <section id="faq" className="py-20 bg-slate-50/70 relative overflow-hidden">
-        {/* Soft decorative background glows */}
-        <div className="absolute top-10 left-1/4 w-72 h-72 rounded-full bg-indigo-200/30 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 right-1/4 w-72 h-72 rounded-full bg-yellow-200/30 blur-3xl pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-3.5 py-1.5 mb-3 shadow-2xs">
-              <HelpCircle className="w-3.5 h-3.5 text-indigo-600" /> Pertanyaan Umum (FAQ)
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Punya Pertanyaan? <span className="text-indigo-600">Temukan Jawabannya</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-2 max-w-md mx-auto leading-relaxed">
-              Jawaban ringkas dan jelas seputar alur pendaftaran, akun admin sekolah, eligibilitas, dan keamanan data.
-            </p>
-          </div>
-
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {[
-              { id: "ALL", label: "Semua Pertanyaan" },
-              { id: "Akun", label: "Akun & Login" },
-              { id: "Fitur", label: "Fitur Unggulan" },
-              { id: "Keamanan", label: "Keamanan Data" },
-            ].map((c) => (
-              <button
-                key={c.id}
-                onClick={() => setFaqFilter(c.id)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  faqFilter === c.id
-                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-2xs"
-                }`}
-              >
-                {c.label}
-              </button>
-            ))}
-          </div>
-
-          {/* FAQ Accordion List */}
-          <div className="space-y-3.5">
-            {filteredFaqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className={`rounded-2xl border transition-all duration-200 overflow-hidden bg-white ${
-                    isOpen
-                      ? "border-indigo-300 shadow-md ring-1 ring-indigo-500/10"
-                      : "border-slate-200/80 hover:border-indigo-200 shadow-xs hover:shadow-sm"
-                  }`}
-                >
-                  <button
-                    onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 text-sm sm:text-base cursor-pointer"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="px-2.5 py-1 text-[11px] font-semibold rounded-full bg-slate-100 text-slate-700">
-                        {faq.cat}
-                      </span>
-                      <span>{faq.q}</span>
-                    </div>
-                    <div className={`w-7 h-7 rounded-full flex items-center justify-center transition-transform ${isOpen ? "bg-indigo-600 text-white rotate-180" : "bg-slate-100 text-slate-500"}`}>
-                      <ChevronDown className="w-4 h-4" />
-                    </div>
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50 pt-3">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA ── */}
       <section className="py-20 bg-slate-900 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-48 h-48 rounded-full bg-yellow-400 opacity-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
@@ -441,11 +323,7 @@ export default function LandingPage() {
             <span>·</span>
             <span>SMAN 8 Jakarta</span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/faq" className="hover:text-slate-600 transition-colors font-semibold">FAQ</Link>
-            <span>·</span>
-            <span>© 2025 Eightracer. Sistem Pelacakan Siswa & Alumni.</span>
-          </div>
+          <span>© 2025 Eightracer. Sistem Pelacakan Siswa & Alumni.</span>
         </div>
       </footer>
     </div>

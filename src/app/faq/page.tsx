@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Search, ChevronDown, HelpCircle, ArrowLeft, ShieldCheck, Key, GraduationCap, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 interface FAQItem {
@@ -66,8 +65,8 @@ export default function FAQPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col overflow-x-hidden">
-      {/* Header */}
+    <div className="min-h-screen bg-white text-slate-800 flex flex-col overflow-x-hidden">
+      {/* Navbar */}
       <header className="sticky top-0 z-30 bg-white border-b border-slate-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
@@ -94,15 +93,20 @@ export default function FAQPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-white border-b border-slate-100 py-12 relative overflow-hidden">
+      {/* Hero FAQ Section with user's font-cherry font styling */}
+      <section className="relative bg-white pt-12 pb-12 overflow-hidden border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-3 relative z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold">
-            <HelpCircle className="w-3.5 h-3.5 text-indigo-600" /> Pusat Bantuan & Pertanyaan Umum
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-400 text-slate-900 text-xs font-black shadow-xs">
+            <HelpCircle className="w-3.5 h-3.5 text-slate-900" /> FAQ & Pusat Bantuan
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Punya Pertanyaan? <span className="text-indigo-600">Temukan Jawabannya di Sini</span>
+
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            Punya Pertanyaan?<br />
+            <span className="font-cherry font-normal text-indigo-600 text-3xl sm:text-4xl block mt-1">
+              Kami Punya Jawabannya! 💡
+            </span>
           </h1>
+
           <p className="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto leading-relaxed">
             Temukan jawaban lengkap seputar alur pendaftaran, akun admin sekolah, eligibilitas, dan keamanan data.
           </p>
@@ -128,10 +132,10 @@ export default function FAQPage() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedCategory === cat
-                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                  : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-2xs"
+                  ? "bg-indigo-600 text-white shadow-md"
+                  : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
               }`}
             >
               {cat === "ALL" ? "Semua Pertanyaan" : cat}
@@ -142,9 +146,9 @@ export default function FAQPage() {
         {/* FAQ Accordion List */}
         <div className="space-y-3">
           {filteredFaqs.length === 0 ? (
-            <Card className="p-8 text-center text-slate-400 text-xs">
+            <div className="p-8 text-center text-slate-400 text-xs font-semibold bg-slate-50 rounded-2xl border border-slate-200">
               Tidak ada pertanyaan yang sesuai dengan pencarian.
-            </Card>
+            </div>
           ) : (
             filteredFaqs.map((faq) => {
               const isOpen = openId === faq.id;
@@ -162,7 +166,7 @@ export default function FAQPage() {
                     className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 text-sm sm:text-base cursor-pointer"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-slate-100 text-slate-600">
+                      <span className="px-2.5 py-1 text-[10px] font-bold rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-100">
                         {faq.category}
                       </span>
                       <span>{faq.question}</span>
@@ -182,17 +186,17 @@ export default function FAQPage() {
           )}
         </div>
 
-        {/* Contact CTA */}
-        <Card className="p-6 bg-gradient-to-r from-indigo-900 via-indigo-800 to-indigo-950 text-white text-center space-y-3 rounded-2xl shadow-lg border border-indigo-700/50">
-          <MessageCircle className="w-7 h-7 text-indigo-300 mx-auto" />
+        {/* Contact Banner */}
+        <div className="p-6 bg-slate-900 text-white text-center space-y-3 rounded-3xl shadow-lg relative overflow-hidden">
+          <MessageCircle className="w-7 h-7 text-yellow-400 mx-auto" />
           <h3 className="font-bold text-base">Masih ada pertanyaan?</h3>
-          <p className="text-xs text-indigo-200 max-w-sm mx-auto">
+          <p className="text-xs text-slate-400 max-w-sm mx-auto">
             Tim BP/BK dan Admin SMAN 8 Jakarta siap membantu pertanyaan teknis atau verifikasi akun kamu.
           </p>
-          <Button variant="outline" size="sm" className="bg-white/10 hover:bg-white/20 border-white/20 text-white text-xs">
+          <Button size="sm" className="bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold text-xs h-9 px-6 rounded-xl">
             Hubungi Tim BP/BK Sekolah
           </Button>
-        </Card>
+        </div>
       </main>
 
       {/* Footer */}
