@@ -11,13 +11,14 @@ export const isServiceRoleConfigured = Boolean(
   serviceRoleKey && !serviceRoleKey.includes("placeholder")
 );
 
-// ── Hard-fail in production if service role key is missing ───────────────────
-// Prevents admin operations silently degrading to anon-level permissions.
+// ── Warn in production if service role key is missing ────────────────────────
+// Individual functions already guard with isServiceRoleConfigured before using
+// the service role client, so a module-level throw is too aggressive.
 if (process.env.NODE_ENV === "production" && !isServiceRoleConfigured) {
-  throw new Error(
-    "[Eightracer] FATAL: SUPABASE_SERVICE_ROLE_KEY is not set in the production environment. " +
-      "Admin operations require a valid service role key. " +
-      "Please set SUPABASE_SERVICE_ROLE_KEY in your environment variables."
+  console.error(
+    "[Eightracer] WARNING: SUPABASE_SERVICE_ROLE_KEY is not set. " +
+      "Admin write operations (create user, audit logs) will be limited. " +
+      "Set SUPABASE_SERVICE_ROLE_KEY in Vercel environment variables."
   );
 }
 
