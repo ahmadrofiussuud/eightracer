@@ -39,7 +39,7 @@ export default function LandingPage() {
           <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-500">
             <a href="#fitur" className="hover:text-slate-900 transition-colors">Fitur</a>
             <a href="#statistik" className="hover:text-slate-900 transition-colors">Statistik</a>
-            <a href="#tentang" className="hover:text-slate-900 transition-colors">Tentang</a>
+            <Link href="/faq" className="hover:text-slate-900 transition-colors">FAQ</Link>
           </nav>
 
           <div className="flex items-center gap-2.5">
@@ -322,7 +322,11 @@ export default function LandingPage() {
             <span>·</span>
             <span>SMAN 8 Jakarta</span>
           </div>
-          <span>© 2025 Eightracer. Sistem Pelacakan Siswa & Alumni.</span>
+          <div className="flex items-center gap-3">
+            <Link href="/faq" className="hover:text-slate-600 transition-colors font-semibold">FAQ</Link>
+            <span>·</span>
+            <span>© 2025 Eightracer. Sistem Pelacakan Siswa & Alumni.</span>
+          </div>
         </div>
       </footer>
     </div>
