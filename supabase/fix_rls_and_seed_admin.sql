@@ -1,78 +1,65 @@
 -- ============================================================
--- EIGHTRACER - FIX RLS & SEED ADMIN PERTAMA
--- Jalankan di: Supabase Dashboard → SQL Editor → New Query
+-- EIGHTRACER - BOOTSTRAP ADMIN (Jalankan di Supabase SQL Editor)
+-- https://supabase.com/dashboard/project/glzctrtwtnlwfiwfqeub/sql/new
 -- ============================================================
 
--- ── STEP 1: Fix RLS user_roles agar user bisa baca role sendiri ─────────────
--- Policy lama: semua authenticated bisa baca semua row (terlalu permisif)
--- Policy baru: setiap user hanya bisa baca row miliknya (+ admin bisa baca semua)
+-- 1. Buat function SECURITY DEFINER agar bisa bypass RLS
+--    untuk seed admin pertama saja
+CREATE OR REPLACE FUNCTION public.bootstrap_first_admin(
+  p_email TEXT,
+  p_full_name TEXT DEFAULT 'Admin SMAN 8 Jakarta'
+)
+RETURNS json
+LANGUAGE plpgsql
+SECURITY DEFINER  -- runs as DB owner, bypasses RLS
+SET search_path = public
+AS $$
+DECLARE
+  v_user_id UUID;
+  v_existing_admin_count INT;
+  v_result json;
+BEGIN
+  -- Block if admin already exists (security guard)
+  SELECT COUNT(*) INTO v_existing_admin_count
+  FROM public.user_roles
+  WHERE role = 'admin';
 
-DROP POLICY IF EXISTS "Authenticated users can read user_roles" ON public.user_roles;
-DROP POLICY IF EXISTS "Only admins can manage user_roles" ON public.user_roles;
+  IF v_existing_admin_count > 0 THEN
+    RETURN json_build_object(
+      'success', false,
+      'message', 'Admin sudah ada. Fungsi ini hanya untuk setup awal.'
+    );
+  END IF;
 
--- User bisa baca role dirinya sendiri (wajib agar login bisa cek role)
-CREATE POLICY "Users can read own role"
-  ON public.user_roles FOR SELECT
-  USING (auth.uid() = user_id);
+  -- Get user_id from auth.users
+  SELECT id INTO v_user_id
+  FROM auth.users
+  WHERE email = p_email
+  LIMIT 1;
 
--- Admin bisa baca semua role
-CREATE POLICY "Admins can read all roles"
-  ON public.user_roles FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.user_roles
-      WHERE user_id = auth.uid() AND role = 'admin'
-    )
+  IF v_user_id IS NULL THEN
+    RETURN json_build_object(
+      'success', false,
+      'message', 'User dengan email tersebut tidak ditemukan di Supabase Auth.'
+    );
+  END IF;
+
+  -- Insert admin role
+  INSERT INTO public.user_roles (user_id, role, full_name, email)
+  VALUES (v_user_id, 'admin', p_full_name, p_email)
+  ON CONFLICT (email) DO NOTHING;
+
+  RETURN json_build_object(
+    'success', true,
+    'message', 'Admin berhasil didaftarkan.',
+    'user_id', v_user_id::text,
+    'email', p_email
   );
+END;
+$$;
 
--- Hanya admin yang bisa insert/update/delete user_roles
-CREATE POLICY "Only admins can insert user_roles"
-  ON public.user_roles FOR INSERT
-  WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.user_roles
-      WHERE user_id = auth.uid() AND role = 'admin'
-    )
-  );
+-- 2. Izinkan fungsi ini dipanggil oleh user terotentikasi (via Supabase RPC)
+GRANT EXECUTE ON FUNCTION public.bootstrap_first_admin(TEXT, TEXT) TO authenticated;
 
-CREATE POLICY "Only admins can update user_roles"
-  ON public.user_roles FOR UPDATE
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.user_roles
-      WHERE user_id = auth.uid() AND role = 'admin'
-    )
-  );
-
-CREATE POLICY "Only admins can delete user_roles"
-  ON public.user_roles FOR DELETE
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.user_roles
-      WHERE user_id = auth.uid() AND role = 'admin'
-    )
-  );
-
--- ── STEP 2: Seed admin pertama ke user_roles ────────────────────────────────
--- Otomatis mengambil UUID dari auth.users berdasarkan email
--- Aman dijalankan berkali-kali
-
-INSERT INTO public.user_roles (user_id, role, full_name, email)
-SELECT
-    id,
-    'admin',
-    'Admin SMAN 8 Jakarta',
-    email
-FROM auth.users
-WHERE email = 'admin@sman8.sch.id'
-ON CONFLICT (email) DO NOTHING;
-
--- ── STEP 3: Verifikasi ───────────────────────────────────────────────────────
-SELECT
-    u.email,
-    r.role,
-    r.full_name,
-    r.created_at
-FROM public.user_roles r
-JOIN auth.users u ON u.id = r.user_id
-WHERE u.email = 'admin@sman8.sch.id';
+-- 3. (Opsional) Test langsung dari SQL Editor:
+-- SELECT public.bootstrap_first_admin('admin@sman8.sch.id');

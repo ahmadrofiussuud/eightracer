@@ -60,15 +60,45 @@ export default function LoginPage() {
         .eq("user_id", authData.user.id)
         .single();
 
+      // ── Auto-bootstrap first admin ─────────────────────────────────────────
+      // Jika tidak ada role (PGRST116 = 0 rows) dan user mencoba login sebagai
+      // admin, coba seed via RPC bootstrap_first_admin (SECURITY DEFINER).
+      // Fungsi Postgres ini MENOLAK jika sudah ada admin — aman dipakai.
+      if ((roleError?.code === "PGRST116" || !roleData) && role === "admin") {
+        const session = authData.session;
+        const bootstrapRes = await fetch("/api/bootstrap-admin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token ?? ""}`,
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            fullName: authData.user.user_metadata?.full_name || "Admin SMAN 8 Jakarta",
+          }),
+        });
+
+        const bootstrapData = await bootstrapRes.json();
+
+        if (!bootstrapData.success) {
+          await supabase.auth.signOut();
+          setError(
+            bootstrapData.message ||
+              "Akun Anda belum terdaftar di sistem. Hubungi Admin Sekolah untuk mendaftarkan akun ini."
+          );
+          setLoading(false);
+          return;
+        }
+
+        // Bootstrap berhasil → langsung redirect ke /admin
+        router.push("/admin");
+        return;
+      }
+      // ──────────────────────────────────────────────────────────────────────
+
       if (roleError || !roleData) {
         await supabase.auth.signOut();
-        // PGRST116 = no rows found; lainnya = permission / RLS error
-        const isNotFound = roleError?.code === "PGRST116" || !roleData;
-        setError(
-          isNotFound
-            ? "Akun Anda belum terdaftar di sistem. Hubungi Admin Sekolah untuk mendaftarkan akun ini."
-            : "Gagal memverifikasi peran akun. Pastikan koneksi stabil dan coba lagi."
-        );
+        setError("Gagal memverifikasi peran akun. Pastikan koneksi stabil dan coba lagi.");
         setLoading(false);
         return;
       }
