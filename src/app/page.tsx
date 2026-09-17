@@ -16,11 +16,53 @@ import {
   LineChart,
   ClipboardList,
   ChevronRight,
+  HelpCircle,
+  ChevronDown,
+  Search,
+  Sparkles,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EightracerLogo } from "@/components/ui/EightracerLogo";
 
 export default function LandingPage() {
+  const [openFaq, setOpenFaq] = React.useState<number | null>(0);
+  const [faqFilter, setFaqFilter] = React.useState<string>("ALL");
+
+  const faqs = [
+    {
+      cat: "Akun",
+      q: "Bagaimana cara mendaftar akun Siswa?",
+      a: "Siswa dapat mendaftar mandiri melalui tombol 'Daftar' di halaman utama, menggunakan Email atau Google Login. Masukkan 10 digit NISN kamu untuk verifikasi kesiswaan otomatis!",
+      badgeBg: "bg-indigo-100 text-indigo-700",
+    },
+    {
+      cat: "Akun",
+      q: "Bagaimana cara mendapatkan akun Admin Sekolah?",
+      a: "Akun Admin Sekolah disediakan langsung oleh pengelola sekolah (tidak melalui pendaftaran mandiri) demi menjaga privasi & keamanan data sensitif seluruh murid.",
+      badgeBg: "bg-amber-100 text-amber-800",
+    },
+    {
+      cat: "Keamanan",
+      q: "Mengapa akun Admin otomatis ter-logout dari HP/laptop lain?",
+      a: "Demi keamanan tingkat tinggi, akun Admin menerapkan aturan Single Device Login. Jika akun digunakan di perangkat baru, sesi di perangkat lama otomatis diakhiri.",
+      badgeBg: "bg-rose-100 text-rose-700",
+    },
+    {
+      cat: "Fitur",
+      q: "Apa itu fitur Timeline Individu Alumni?",
+      a: "Timeline Individu adalah visualisasi perjalanan kronologis alumni dari SMA, kelulusan, seleksi PTN, hingga pencapaian IPK dan beasiswa per semester di kampus!",
+      badgeBg: "bg-emerald-100 text-emerald-800",
+    },
+    {
+      cat: "Fitur",
+      q: "Bagaimana status Eligibilitas 40% SNBP dihitung?",
+      a: "Status eligibilitas dihitung otomatis menggabungkan rata-rata nilai rapor semester 1-5 (bobot 75%) dan portofolio prestasi lomba (bobot 25%).",
+      badgeBg: "bg-violet-100 text-violet-800",
+    },
+  ];
+
+  const filteredFaqs = faqs.filter((f) => faqFilter === "ALL" || f.cat === faqFilter);
   return (
     <div className="min-h-screen bg-white text-slate-800 flex flex-col overflow-x-hidden">
       {/* Navbar */}
@@ -283,6 +325,80 @@ export default function LandingPage() {
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FUN FAQ SECTION ── */}
+      <section id="faq" className="py-20 bg-amber-50/60 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-4 left-6 w-12 h-12 rounded-full bg-yellow-400 opacity-60 animate-bounce pointer-events-none" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-6 right-8 w-24 h-24 rounded-2xl bg-indigo-600 rotate-12 opacity-10 pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-1.5 text-xs font-black text-indigo-700 bg-yellow-300 border border-yellow-400 rounded-full px-3.5 py-1 mb-3 shadow-xs">
+              <HelpCircle className="w-3.5 h-3.5" /> Pertanyaan Umum (FAQ)
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900">
+              Punya Pertanyaan? <br />
+              <span className="text-indigo-600 font-cherry text-4xl md:text-5xl">Kami Punya Jawabannya!</span> 💡
+            </h2>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="flex justify-center gap-2 mb-8">
+            {["ALL", "Akun", "Fitur", "Keamanan"].map((c) => (
+              <button
+                key={c}
+                onClick={() => setFaqFilter(c)}
+                className={`px-4 py-2 rounded-xl text-xs font-black transition-all ${
+                  faqFilter === c
+                    ? "bg-indigo-600 text-white shadow-md -translate-y-0.5"
+                    : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
+                }`}
+              >
+                {c === "ALL" ? "✨ Semua Pertanyaan" : c}
+              </button>
+            ))}
+          </div>
+
+          {/* FAQ Accordion List */}
+          <div className="space-y-4">
+            {filteredFaqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-2xl border-2 transition-all duration-200 overflow-hidden ${
+                    isOpen
+                      ? "border-indigo-600 bg-white shadow-lg rotate-[-0.5deg]"
+                      : "border-slate-200 bg-white hover:border-indigo-300 shadow-xs"
+                  }`}
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 text-sm sm:text-base cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`px-2.5 py-1 text-[11px] font-black rounded-lg ${faq.badgeBg}`}>
+                        {faq.cat}
+                      </span>
+                      <span>{faq.q}</span>
+                    </div>
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center transition-transform ${isOpen ? "bg-indigo-600 text-white rotate-180" : "bg-slate-100 text-slate-500"}`}>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50 pt-3">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
