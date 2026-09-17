@@ -61,7 +61,13 @@ export default function LoginPage() {
 
       if (roleError || !roleData) {
         await supabase.auth.signOut();
-        setError("Akun Anda belum terdaftar di sistem. Hubungi Admin Sekolah.");
+        // PGRST116 = no rows found; lainnya = permission / RLS error
+        const isNotFound = roleError?.code === "PGRST116" || !roleData;
+        setError(
+          isNotFound
+            ? "Akun Anda belum terdaftar di sistem. Hubungi Admin Sekolah untuk mendaftarkan akun ini."
+            : "Gagal memverifikasi peran akun. Pastikan koneksi stabil dan coba lagi."
+        );
         setLoading(false);
         return;
       }
