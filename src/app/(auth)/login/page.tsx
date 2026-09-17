@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  School,
   Lock,
   Mail,
   ArrowRight,
@@ -20,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 import { EightracerLogo } from "@/components/ui/EightracerLogo";
+import { createAdminDeviceSession } from "@/app/actions/admin-auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function LoginPage() {
       // Jika tidak ada role (PGRST116 = 0 rows) dan user mencoba login sebagai
       // admin, coba seed via RPC bootstrap_first_admin (SECURITY DEFINER).
       // Fungsi Postgres ini MENOLAK jika sudah ada admin — aman dipakai.
-      if ((roleError?.code === "PGRST116" || !roleData) && role === "admin") {
+      if ((roleError || !roleData) && role === "admin") {
         const session = authData.session;
         const bootstrapRes = await fetch("/api/bootstrap-admin", {
           method: "POST",
@@ -90,7 +90,8 @@ export default function LoginPage() {
           return;
         }
 
-        // Bootstrap berhasil → langsung redirect ke /admin
+        // Bootstrap berhasil → set admin session cookie → redirect /admin
+        await createAdminDeviceSession(authData.user.id, navigator.userAgent);
         router.push("/admin");
         return;
       }
@@ -117,7 +118,13 @@ export default function LoginPage() {
         return;
       }
 
-      router.push(roleData.role === "admin" ? "/admin" : "/student");
+      // Set admin session cookie agar middleware tidak blokir /admin
+      if (roleData.role === "admin") {
+        await createAdminDeviceSession(authData.user.id, navigator.userAgent);
+        router.push("/admin");
+      } else {
+        router.push("/student");
+      }
     } catch {
       setError("Terjadi kesalahan. Silakan coba lagi.");
       setLoading(false);
