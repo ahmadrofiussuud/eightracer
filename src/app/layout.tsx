@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "Eightracer - High School Student & Alumni Tracker",
   description:
     "Sistem pelacakan dan evaluasi capaian siswa SMAN 8 Jakarta dari seleksi perguruan tinggi negeri hingga progres beasiswa KIP-Kuliah dan IPK universitas.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

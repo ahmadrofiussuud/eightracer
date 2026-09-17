@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Dark background -->
+  <rect width="100" height="100" rx="22" fill="#131929"/>
+
+  <!-- Pink ring (top) -->
+  <circle cx="50" cy="36" r="19" stroke="url(#pinkG)" stroke-width="12" fill="none"/>
+
+  <!-- Blue ring (bottom) -->
+  <circle cx="50" cy="64" r="19" stroke="url(#blueG)" stroke-width="12" fill="none"/>
+
+  <!-- Overlap: blue ring left half over pink (blue in front on left) -->
+  <clipPath id="cL"><rect x="0" y="0" width="50" height="100"/></clipPath>
+  <circle cx="50" cy="64" r="19" stroke="url(#blueG)" stroke-width="12" fill="none" clip-path="url(#cL)"/>
+
+  <!-- Overlap: pink ring right half over blue (pink in front on right) -->
+  <clipPath id="cR"><rect x="50" y="0" width="50" height="100"/></clipPath>
+  <circle cx="50" cy="36" r="19" stroke="url(#pinkG)" stroke-width="12" fill="none" clip-path="url(#cR)"/>
+
+  <defs>
+    <linearGradient id="pinkG" x1="30" y1="17" x2="70" y2="55" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="blueG" x1="30" y1="45" x2="70" y2="83" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+</svg>

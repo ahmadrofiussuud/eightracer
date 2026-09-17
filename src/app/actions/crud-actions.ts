@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { supabaseAdmin, isServiceRoleConfigured } from "@/lib/supabase-admin";
